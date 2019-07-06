@@ -1,0 +1,140 @@
+﻿@model CadeODinheiro.Core.DTO.NotificationModel
+@{
+    ViewBag.Title = "Cadastro";
+    Layout = "~/Views/Shared/_ContentFormLayout.cshtml";
+}
+
+@section headerWidget{
+    <h2>Notificação</h2>
+    &nbsp;&nbsp;<i id="divLoading" style="display: none" class="fa fa-cog fa-2x fa-spin"></i>
+}
+
+@using (Ajax.BeginForm("Cadastro", "Notification", new AjaxOptions()
+{
+    HttpMethod = "Post",
+    LoadingElementId = "divLoading",
+    OnSuccess = "OnEndProccessMensagemComReload"
+},
+    new { @class = "smart-form" }))
+{
+    @Html.AntiForgeryToken()
+    <fieldset>
+        <section>
+            <div style="color:red;">
+                @Html.ValidationSummary()
+            </div>
+        </section>
+        @Html.TextBoxFor(e => e.sID, new { @readonly = "readonly", style = "display: none;" })
+        <div class="row">
+            <section class="col col-10">
+                <label class="label">@Html.LabelFor(e => e.sDescricao)</label>
+                <label class="input">
+                    @Html.EditorFor(e => e.sDescricao)
+                </label>
+            </section>
+        </div>
+        <div class="row">
+            <section class="col col-6">
+                <label class="label">@Html.LabelFor(e => e.sCategoryID)</label>
+                <label class="select">
+                    @Html.DropDownListFor(x => x.sCategoryID, Model.listaCategorias, new { @class = "input-sm" })
+                    <i></i>
+                </label>
+            </section>
+        </div>
+        <div class="row">
+            <section>
+                <label class="label">@Html.LabelFor(e => e.NotificationType)</label>
+                <div class="inline-group">
+                    <label class="radio">
+                        @if (Model.NotificationType == CadeODinheiro.Core.Entity.Enum.NotificationType.OcorrenciaUnica || string.IsNullOrEmpty(Model.sDescricao))
+                        {
+                            <input type="radio" class="tipoPessoa-trigger" name="NotificationType" value="@CadeODinheiro.Core.Entity.Enum.NotificationType.OcorrenciaUnica" checked="checked">
+                        }
+                        else
+                        {
+                            <input type="radio" class="tipoPessoa-trigger" name="NotificationType" value="@CadeODinheiro.Core.Entity.Enum.NotificationType.OcorrenciaUnica">
+                        }
+                        <i></i>Ocorrência Única
+                    </label>
+                    <label class="radio">
+                        @if (Model.NotificationType == CadeODinheiro.Core.Entity.Enum.NotificationType.Mensal)
+                        {
+                            <input type="radio" class="tipoPessoa-trigger" name="NotificationType" value="@CadeODinheiro.Core.Entity.Enum.NotificationType.Mensal" checked="checked">
+                        }
+                        else
+                        {
+                            <input type="radio" class="tipoPessoa-trigger" name="NotificationType" value="@CadeODinheiro.Core.Entity.Enum.NotificationType.Mensal">
+                        }
+                        <i></i>Mensal
+                    </label>
+                </div>
+            </section>
+        </div>
+        <div class="row">
+            <section class="col col-4">
+                <label class="label">@Html.LabelFor(e => e.dData)</label>
+                <label class="input">
+                    @Html.EditorFor(l => l.dData, new { value = @Model.dData })
+                </label>
+            </section>
+            <section class="col col-4">
+                <label class="label">@Html.LabelFor(e => e.dDataFim)</label>
+                <label class="input">
+                    @Html.EditorFor(l => l.dDataFim, new { value = @Model.dDataFim })
+                </label>
+            </section>
+            <section class="col col-4">
+                <label class="label">@Html.LabelFor(e => e.dValor)</label>
+                <label class="input">
+                    @{
+                        double dTemp = Model.dValor * 100;
+                        <input id="dValor" name="dValor" type="text" class="money" value="@dTemp" style="text-align: right;" autocomplete="off" />   
+                    }
+                    </label>
+            </section>
+        </div>
+        <div class="row">
+            <section>
+                <label class="label">@Html.LabelFor(e => e.StatusType)</label>
+                <div class="inline-group">
+                    <label class="radio">
+                        @if (Model.StatusType == CadeODinheiro.Core.Entity.Enum.StatusType.Ativo || string.IsNullOrEmpty(Model.sDescricao))
+                        {
+                            <input type="radio" class="tipoPessoa-trigger" name="StatusType" value="@CadeODinheiro.Core.Entity.Enum.StatusType.Ativo" checked="checked">
+                        }
+                        else
+                        {
+                            <input type="radio" class="tipoPessoa-trigger" name="StatusType" value="@CadeODinheiro.Core.Entity.Enum.StatusType.Ativo">
+                        }
+                        <i></i>Ativo
+                    </label>
+                    <label class="radio">
+                        @if (Model.StatusType == CadeODinheiro.Core.Entity.Enum.StatusType.Inativo)
+                        {
+                            <input type="radio" class="tipoPessoa-trigger" name="StatusType" value="@CadeODinheiro.Core.Entity.Enum.StatusType.Inativo" checked="checked">
+                        }
+                        else
+                        {
+                            <input type="radio" class="tipoPessoa-trigger" name="StatusType" value="@CadeODinheiro.Core.Entity.Enum.StatusType.Inativo">
+                        }
+                        <i></i>Inativo
+                    </label>
+                </div>
+            </section>
+        </div>
+    </fieldset>
+    <footer>
+        <button type="submit" class="btn btn-primary" value="Gravar">
+            Gravar
+        </button>
+    </footer>
+
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#sDescricao").focus();
+        $('.money').mask('000000000000000,00', { reverse: true });
+    });
+</script>

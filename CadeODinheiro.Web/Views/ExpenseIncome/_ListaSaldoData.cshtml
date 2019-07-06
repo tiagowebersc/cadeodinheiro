@@ -1,0 +1,57 @@
+﻿@model PagedList.IPagedList<CadeODinheiro.Core.DTO.SaldoDataItemModel>
+<fieldset>
+    <div class="row">
+        <table class="table table-bordered table-hover col-lg-12" style="font-size: inherit;">
+            <thead>
+                <tr>
+                    <th class="col-xs-2 text-align-center">Data</th>
+                    <th class="col-xs-6 text-align-center">Conta</th>
+                    <th class="col-xs-2 text-align-center">Valor do Dia</th>
+                    <th class="col-xs-2 text-align-center">Saldo</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+{
+    string estiloLinha = string.Empty;
+    if (item.dValorDia >= 0) { estiloLinha = "background-color: mediumaquamarine;"; } else { estiloLinha = "background-color: lightpink;"; }
+
+    <tr style="@estiloLinha">
+        <td align="left">@item.dData.ToString("dd/MM/yyyy")</td>
+        <td align="left">@item.sContaDesc</td>
+        <td align="left">@item.dValorDia.ToString("C")</td>
+        <td align="right">@item.dSaldo.ToString("C")</td>
+    </tr>
+}
+            </tbody>
+        </table>
+    </div>
+    <div class="row" style="text-align: center; ">
+        @if (Model.HasPreviousPage)
+        {
+            <button type="button" name="navegaPagina" onclick="ListaSaldoData('1')"><<</button>
+            @Html.Raw(" ");
+            <button type="button" name="navegaPagina" onclick="ListaSaldoData(@((Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)-1))">< Anterior</button>
+        }
+        else
+        {
+            @:<<
+            @Html.Raw(" ");
+            @:< Anterior
+    }
+        | Página @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+        de @Model.PageCount |
+        @if (Model.HasNextPage)
+        {
+            <button type="button" name="navegaPagina" onclick="ListaSaldoData(@((Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)+1))">Próxima ></button>
+            @Html.Raw(" ");
+            <button type="button" name="navegaPagina" onclick="ListaSaldoData(@Model.PageCount)">>></button>
+        }
+        else
+        {
+            @:Próxima >
+            @Html.Raw(" ")
+            @:>>
+    }
+    </div>
+</fieldset>

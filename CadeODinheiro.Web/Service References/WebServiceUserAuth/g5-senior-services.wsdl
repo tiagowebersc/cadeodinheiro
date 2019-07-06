@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:tns="http://services.senior.com.br" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" name="g5-senior-services" targetNamespace="http://services.senior.com.br" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xsd:schema>
+      <xsd:import schemaLocation="http://tbos.cloudapp.net:9090/g5-senior-services/sapiens_SyncMCWFUsers?xsd=1" namespace="http://services.senior.com.br" />
+    </xsd:schema>
+  </types>
+  <message name="UserReplication">
+    <part name="user" type="xsd:string" />
+    <part name="password" type="xsd:string" />
+    <part name="encryption" type="xsd:int" />
+    <part name="parameters" type="tns:mcwfUsersUserReplicationIn" />
+  </message>
+  <message name="UserReplicationResponse">
+    <part name="result" type="tns:mcwfUsersUserReplicationOut" />
+  </message>
+  <message name="DiscoverUsersGroups">
+    <part name="user" type="xsd:string" />
+    <part name="password" type="xsd:string" />
+    <part name="encryption" type="xsd:int" />
+    <part name="parameters" type="tns:mcwfUsersDiscoverUsersGroupsIn" />
+  </message>
+  <message name="DiscoverUsersGroupsResponse">
+    <part name="result" type="tns:mcwfUsersDiscoverUsersGroupsOut" />
+  </message>
+  <message name="ChangePassword">
+    <part name="user" type="xsd:string" />
+    <part name="password" type="xsd:string" />
+    <part name="encryption" type="xsd:int" />
+    <part name="parameters" type="tns:mcwfUsersChangePasswordIn" />
+  </message>
+  <message name="ChangePasswordResponse">
+    <part name="result" type="tns:mcwfUsersChangePasswordOut" />
+  </message>
+  <message name="AuthenticateJAAS">
+    <part name="user" type="xsd:string" />
+    <part name="password" type="xsd:string" />
+    <part name="encryption" type="xsd:int" />
+    <part name="parameters" type="tns:mcwfUsersAuthenticateJAASIn" />
+  </message>
+  <message name="AuthenticateJAASResponse">
+    <part name="result" type="tns:mcwfUsersAuthenticateJAASOut" />
+  </message>
+  <message name="GetUserGroups">
+    <part name="user" type="xsd:string" />
+    <part name="password" type="xsd:string" />
+    <part name="encryption" type="xsd:int" />
+    <part name="parameters" type="tns:mcwfUsersGetUserGroupsIn" />
+  </message>
+  <message name="GetUserGroupsResponse">
+    <part name="result" type="tns:mcwfUsersGetUserGroupsOut" />
+  </message>
+  <message name="GetPersonKind">
+    <part name="user" type="xsd:string" />
+    <part name="password" type="xsd:string" />
+    <part name="encryption" type="xsd:int" />
+    <part name="parameters" type="tns:mcwfUsersGetPersonKindIn" />
+  </message>
+  <message name="GetPersonKindResponse">
+    <part name="result" type="tns:mcwfUsersGetPersonKindOut" />
+  </message>
+  <message name="PersonExists">
+    <part name="user" type="xsd:string" />
+    <part name="password" type="xsd:string" />
+    <part name="encryption" type="xsd:int" />
+    <part name="parameters" type="tns:mcwfUsersPersonExistsIn" />
+  </message>
+  <message name="PersonExistsResponse">
+    <part name="result" type="tns:mcwfUsersPersonExistsOut" />
+  </message>
+  <portType name="sapiens_SyncMCWFUsers">
+    <operation name="UserReplication" parameterOrder="user password encryption parameters">
+      <input wsam:Action="http://services.senior.com.br/sapiens_SyncMCWFUsers/UserReplicationRequest" message="tns:UserReplication" />
+      <output wsam:Action="http://services.senior.com.br/sapiens_SyncMCWFUsers/UserReplicationResponse" message="tns:UserReplicationResponse" />
+    </operation>
+    <operation name="DiscoverUsersGroups" parameterOrder="user password encryption parameters">
+      <input wsam:Action="http://services.senior.com.br/sapiens_SyncMCWFUsers/DiscoverUsersGroupsRequest" message="tns:DiscoverUsersGroups" />
+      <output wsam:Action="http://services.senior.com.br/sapiens_SyncMCWFUsers/DiscoverUsersGroupsResponse" message="tns:DiscoverUsersGroupsResponse" />
+    </operation>
+    <operation name="ChangePassword" parameterOrder="user password encryption parameters">
+      <input wsam:Action="http://services.senior.com.br/sapiens_SyncMCWFUsers/ChangePasswordRequest" message="tns:ChangePassword" />
+      <output wsam:Action="http://services.senior.com.br/sapiens_SyncMCWFUsers/ChangePasswordResponse" message="tns:ChangePasswordResponse" />
+    </operation>
+    <operation name="AuthenticateJAAS" parameterOrder="user password encryption parameters">
+      <input wsam:Action="http://services.senior.com.br/sapiens_SyncMCWFUsers/AuthenticateJAASRequest" message="tns:AuthenticateJAAS" />
+      <output wsam:Action="http://services.senior.com.br/sapiens_SyncMCWFUsers/AuthenticateJAASResponse" message="tns:AuthenticateJAASResponse" />
+    </operation>
+    <operation name="GetUserGroups" parameterOrder="user password encryption parameters">
+      <input wsam:Action="http://services.senior.com.br/sapiens_SyncMCWFUsers/GetUserGroupsRequest" message="tns:GetUserGroups" />
+      <output wsam:Action="http://services.senior.com.br/sapiens_SyncMCWFUsers/GetUserGroupsResponse" message="tns:GetUserGroupsResponse" />
+    </operation>
+    <operation name="GetPersonKind" parameterOrder="user password encryption parameters">
+      <input wsam:Action="http://services.senior.com.br/sapiens_SyncMCWFUsers/GetPersonKindRequest" message="tns:GetPersonKind" />
+      <output wsam:Action="http://services.senior.com.br/sapiens_SyncMCWFUsers/GetPersonKindResponse" message="tns:GetPersonKindResponse" />
+    </operation>
+    <operation name="PersonExists" parameterOrder="user password encryption parameters">
+      <input wsam:Action="http://services.senior.com.br/sapiens_SyncMCWFUsers/PersonExistsRequest" message="tns:PersonExists" />
+      <output wsam:Action="http://services.senior.com.br/sapiens_SyncMCWFUsers/PersonExistsResponse" message="tns:PersonExistsResponse" />
+    </operation>
+  </portType>
+  <binding name="sapiens_SyncMCWFUsersPortBinding" type="tns:sapiens_SyncMCWFUsers">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <operation name="UserReplication">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://services.senior.com.br" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://services.senior.com.br" />
+      </output>
+    </operation>
+    <operation name="DiscoverUsersGroups">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://services.senior.com.br" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://services.senior.com.br" />
+      </output>
+    </operation>
+    <operation name="ChangePassword">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://services.senior.com.br" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://services.senior.com.br" />
+      </output>
+    </operation>
+    <operation name="AuthenticateJAAS">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://services.senior.com.br" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://services.senior.com.br" />
+      </output>
+    </operation>
+    <operation name="GetUserGroups">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://services.senior.com.br" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://services.senior.com.br" />
+      </output>
+    </operation>
+    <operation name="GetPersonKind">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://services.senior.com.br" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://services.senior.com.br" />
+      </output>
+    </operation>
+    <operation name="PersonExists">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://services.senior.com.br" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://services.senior.com.br" />
+      </output>
+    </operation>
+  </binding>
+  <service name="g5-senior-services">
+    <port name="sapiens_SyncMCWFUsersPort" binding="tns:sapiens_SyncMCWFUsersPortBinding">
+      <soap:address location="http://tbos.cloudapp.net:9090/g5-senior-services/sapiens_SyncMCWFUsers" />
+    </port>
+  </service>
+</definitions>

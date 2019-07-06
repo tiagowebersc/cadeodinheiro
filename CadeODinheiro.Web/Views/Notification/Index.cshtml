@@ -1,0 +1,95 @@
+﻿@model PagedList.IPagedList<CadeODinheiro.Core.Entity.Notification>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_ContentFormLayout.cshtml";
+}
+
+@section headerWidget{
+    <h2>Notificações</h2>
+    &nbsp;&nbsp;<i id="divLoading" style="display: none" class="fa fa-cog fa-2x fa-spin"></i>
+}
+
+@using (Ajax.BeginForm("Index", "Notification", new AjaxOptions()
+{
+    HttpMethod = "Post",
+    LoadingElementId = "divLoading",
+    OnSuccess = "OnEndProccessMensagemComReload"
+},
+    new { @class = "smart-form" }))
+{
+    @Html.AntiForgeryToken()
+    <div align="right">
+        <button type="submit" class="btn btn-primary  btn-lg" name="navegaPagina" value="N">Cadastrar Notificação</button>
+    </div>
+    <br />
+    <table class="table table-bordered col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <thead>
+            <tr>
+                <th class="col-xs-5 col-sm-5 col-md-5 col-lg-5 text-align-center">Descrição</th>
+                <th class="col-xs-1 col-sm-1 col-md-1 col-lg-1 text-align-center">Data</th>
+                <th class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-align-center">Frequência</th>
+                <th class="col-xs-1 col-sm-1 col-md-1 col-lg-1 text-align-center">Valor</th>
+                <th class="col-xs-1 col-sm-1 col-md-1 col-lg-1 text-align-center">Situação</th>
+                <th class="col-xs-1 col-sm-1 col-md-1 col-lg-1 text-align-center">Alterar</th>
+                <th class="col-xs-1 col-sm-1 col-md-1 col-lg-1 text-align-center">Excluir</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td align="left">@Html.DisplayFor(modelItem => item.sDescricao)</td>
+                    <td align="left">@item.dData.ToString("dd/MM/yyyy")</td>
+                    @if (item.NotificationType == CadeODinheiro.Core.Entity.Enum.NotificationType.OcorrenciaUnica)
+                    {
+                    <td align="center">Ocorrência Única</td> }
+                    else
+                    {
+                    <td align="center">Mensal</td> }
+                    <td align="right">@item.dValor.ToString("C")</td>
+                    @if (item.StatusType == CadeODinheiro.Core.Entity.Enum.StatusType.Ativo)
+                    {
+                        <td align="center">Ativo</td> }
+                    else
+                    {
+                        <td align="center">Inativo</td> }
+                    <td align="center"><button type="submit" class="btn btn-default" name="alterarNotificacao" value="@item.sID"><i class="fa fa-pencil-square-o"></i></button></td>
+                    <td align="center"><button type="submit" class="btn btn-default" name="excluirNotificacao" value="@item.sID"><i class="fa fa-times-circle"></i></button></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div>
+        @if (Model.HasPreviousPage)
+        {
+            <button type="submit" name="navegaPagina" value="1"><<</button>
+            @*@Html.ActionLink("<<", "Index", new { pagina = 1, sortOrder = ViewBag.CurrentSort, currentFilter=ViewBag.CurrentFilter  })*@
+            @Html.Raw(" ");
+            <button type="submit" name="navegaPagina" value="@((Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)-1)">< Anterior</button>
+            @*@Html.ActionLink("< Anterior", "Index", new { pagina = Model.PageNumber - 1, sortOrder = ViewBag.CurrentSort, currentFilter=ViewBag.CurrentFilter  })*@
+        }
+        else
+        {
+            @:<<
+            @Html.Raw(" ");
+            @:< Anterior
+        }
+        | Página @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+        de @Model.PageCount |
+        @if (Model.HasNextPage)
+        {
+            <button type="submit" name="navegaPagina" value="@((Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)+1)">Próxima ></button>
+            @*@Html.ActionLink("Próxima >", "Index", new { pagina = Model.PageNumber + 1, sortOrder = ViewBag.CurrentSort, currentFilter=ViewBag.CurrentFilter  })*@
+            @Html.Raw(" ");
+            <button type="submit" name="navegaPagina" value="@Model.PageCount">>></button>
+            @*@Html.ActionLink(">>", "Index", new { pagina = Model.PageCount, sortOrder = ViewBag.CurrentSort, currentFilter=ViewBag.CurrentFilter  })*@
+        }
+        else
+        {
+            @:Próxima >
+            @Html.Raw(" ")
+            @:>>
+        }
+    </div>
+}

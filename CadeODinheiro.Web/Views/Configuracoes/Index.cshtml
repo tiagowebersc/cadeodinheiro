@@ -1,0 +1,76 @@
+﻿@model CadeODinheiro.Core.DTO.ParamsModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_ContentFormLayout.cshtml";
+}
+
+@section headerWidget{
+    <h2>Configurações</h2>
+    &nbsp;&nbsp;<i id="divLoading" style="display: none" class="fa fa-cog fa-2x fa-spin"></i>
+}
+
+@using (Ajax.BeginForm("Index", "Configuracoes", new AjaxOptions()
+    {
+        HttpMethod = "Post",
+        LoadingElementId = "divLoading"
+    },
+        new { @class = "smart-form" }))
+{
+    <div class="well">
+        @Html.AntiForgeryToken()
+        <fieldset>
+            <table class="table table-bordered col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <thead>
+                    <tr>
+                        <th class="col-xs-3 col-sm-3 col-md-3 col-lg-2 text-align-center">Parâmetro</th>
+                        <th class="col-xs-4 col-sm-4 col-md-4 col-lg-8 text-align-center" align="center">Descrição</th>
+                        <th class="col-xs-3 col-sm-3 col-md-3 col-lg-4 text-align-center" align="center">Valor</th>
+                        <th class="col-xs-4 col-sm-4 col-md-4 col-lg-1 text-align-center" align="center"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var p in Model.listParams)
+                    {
+                        <tr>
+                            <td>
+                                @p.sParametro
+                            </td>
+                            <td>
+                                @p.sDescricao
+                            </td>
+                            <td align="center">
+                                <div class="input">
+                                    <input type="text" value="@p.sValor" name="valor" id="@p.sID" />
+                                </div>
+                            </td>
+                            <td>
+                                <a data-id="@p.sID" class="param_trigger"><i class="fa fa-save"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </fieldset>
+    </div>
+}
+
+<script type="text/javascript">
+    $('.param_trigger').on('click', function (event) {
+        var ret = $.post("Configuracoes/GravaParametro", { sID: $(this).data("id"), sValor: $('#' + $(this).data("id")).val() }, content, 'json');
+        if (ret.success) {
+            $.SmartMessageBox({
+                title: "<i class='fa fa-comment txt-color-orangeDark'></i><span>  OK</span>",
+                content: "Parametro gravado com sucesso!",
+                buttons: '[Ok]'
+            });
+        }
+        else {
+            $.SmartMessageBox({
+                title: "<i class='fa fa-comment txt-color-orangeDark'><span>  Erro</span>",
+                content: "Erro ao gravar parâmetro!",
+                buttons: '[Ok]'
+            });
+        }
+
+    });
+</script>

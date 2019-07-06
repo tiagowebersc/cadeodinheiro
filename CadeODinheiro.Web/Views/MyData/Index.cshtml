@@ -1,0 +1,71 @@
+﻿@model CadeODinheiro.Core.DTO.MyDataModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_ContentFormLayout.cshtml";
+}
+
+@section headerWidget{
+    <h2>Meus Dados</h2>
+    &nbsp;&nbsp;<i id="divLoading" style="display: none" class="fa fa-cog fa-2x fa-spin"></i>
+}
+
+@using (Ajax.BeginForm("Index", "MyData", new AjaxOptions()
+{
+    HttpMethod = "Post",
+    LoadingElementId = "divLoading",
+    OnSuccess = "OnEndProccessMensagemComReload"
+},
+    new { @class = "smart-form" }))
+{
+    @Html.AntiForgeryToken()
+    <fieldset>
+        <section>
+            <div style="color:red;">
+                @Html.ValidationSummary()
+            </div>
+        </section>
+        <div class="row">
+            <section>
+                <label class="label">@Html.LabelFor(e => e.login)</label>
+                <strong>
+                    @Model.login
+                </strong>
+            </section>
+        </div>
+        <div class="row">
+            <section class="col col-12">
+                <label class="label">@Html.LabelFor(e => e.nome)</label>
+                <label class="input">
+                    @Html.EditorFor(e => e.nome)
+                </label>
+            </section>
+        </div>
+    </fieldset>
+    <header>
+        Alterar Senha
+    </header>
+    <fieldset>
+        <div class="row">
+            <section class="col col-4">
+                <label class="label">@Html.LabelFor(e => e.senha)</label>
+                <label class="input">
+                    @Html.EditorFor(e => e.senha)
+                </label>
+            </section>
+        </div>
+        <div class="row">
+            <section class="col col-4">
+                <label class="label">@Html.LabelFor(e => e.confirmarSenha)</label>
+                <label class="input">
+                    @Html.EditorFor(e => e.confirmarSenha)
+                </label>
+            </section>
+        </div>
+    </fieldset>
+    <footer>
+        <button type="submit" class="btn btn-primary" value="Alterar">
+            Alterar
+        </button>
+    </footer>
+
+}

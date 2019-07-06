@@ -1,0 +1,210 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2B0FED13-EBEB-411F-A275-00863E22BEEA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CadeODinheiro.Core</RootNamespace>
+    <AssemblyName>CadeODinheiro.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject">
+      <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Extensions.Conventions">
+      <HintPath>..\packages\ninject.extensions.conventions.3.2.0.0\lib\net45-full\Ninject.Extensions.Conventions.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.ManagedDataAccess">
+      <HintPath>..\packages\odp.net.managed.121.1.1\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.30506.0\lib\net40\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Business\Abstract\IAccountBusiness.cs" />
+    <Compile Include="Business\Abstract\IBusiness.cs" />
+    <Compile Include="Business\Abstract\ICategoryBusiness.cs" />
+    <Compile Include="Business\Abstract\IExpenseIncomeReferenceBusiness.cs" />
+    <Compile Include="Business\Abstract\IExpenseIncomeBusiness.cs" />
+    <Compile Include="Business\Abstract\ILogBusiness.cs" />
+    <Compile Include="Business\Abstract\ILogExpenseIncomeBusiness.cs" />
+    <Compile Include="Business\Abstract\INotificationBusiness.cs" />
+    <Compile Include="Business\Abstract\IParameterBusiness.cs" />
+    <Compile Include="Business\Abstract\IUserBusiness.cs" />
+    <Compile Include="Business\Concrete\AccountBusiness.cs" />
+    <Compile Include="Business\Concrete\BaseBusiness.cs" />
+    <Compile Include="Business\Concrete\CategoryBusiness.cs" />
+    <Compile Include="Business\Concrete\ExpenseIncomeReferenceBusiness.cs" />
+    <Compile Include="Business\Concrete\ExpenseIncomeBusiness.cs" />
+    <Compile Include="Business\Concrete\LogBusiness.cs" />
+    <Compile Include="Business\Concrete\LogExpenseIncomeBusiness.cs" />
+    <Compile Include="Business\Concrete\NotificationBusiness.cs" />
+    <Compile Include="Business\Concrete\ParameterBusiness.cs" />
+    <Compile Include="Business\Concrete\UserBusiness.cs" />
+    <Compile Include="DI\NinjectModuleCustom.cs" />
+    <Compile Include="DTO\AuthModel.cs" />
+    <Compile Include="DTO\CCPaymentModel.cs" />
+    <Compile Include="DTO\ExpenseIncomeModel.cs" />
+    <Compile Include="DTO\ExpIncAgrupadorModel.cs" />
+    <Compile Include="DTO\ExtratoModel.cs" />
+    <Compile Include="DTO\HomeModel.cs" />
+    <Compile Include="DTO\MyDataModel.cs" />
+    <Compile Include="DTO\NotificationModel.cs" />
+    <Compile Include="DTO\ParamsModel.cs" />
+    <Compile Include="DTO\PrevisaoModel.cs" />
+    <Compile Include="DTO\ResumoCategoriaMesModel.cs" />
+    <Compile Include="DTO\ResumoMensalModel.cs" />
+    <Compile Include="DTO\SaldoDataModel.cs" />
+    <Compile Include="DTO\TransferenciaModel.cs" />
+    <Compile Include="Entity\Account.cs" />
+    <Compile Include="Entity\Category.cs" />
+    <Compile Include="Entity\Enum\AccountType.cs" />
+    <Compile Include="Entity\Enum\CategoryType.cs" />
+    <Compile Include="Entity\Enum\LogType.cs" />
+    <Compile Include="Entity\ExpenseIncome.cs" />
+    <Compile Include="Entity\Enum\NotificationType.cs" />
+    <Compile Include="Entity\Enum\StatusType.cs" />
+    <Compile Include="Entity\ExpenseIncomeReference.cs" />
+    <Compile Include="Entity\Log.cs" />
+    <Compile Include="Entity\LogExpenseIncome.cs" />
+    <Compile Include="Entity\Notification.cs" />
+    <Compile Include="Entity\Parameter.cs" />
+    <Compile Include="Entity\User.cs" />
+    <Compile Include="Infrastructure\Util\Encrypter.cs" />
+    <Compile Include="Migrations\201409191242321_v1DB.cs" />
+    <Compile Include="Migrations\201409191242321_v1DB.Designer.cs">
+      <DependentUpon>201409191242321_v1DB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201409201602255_v2DB.cs" />
+    <Compile Include="Migrations\201409201602255_v2DB.Designer.cs">
+      <DependentUpon>201409201602255_v2DB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201409201647591_v3DB.cs" />
+    <Compile Include="Migrations\201409201647591_v3DB.Designer.cs">
+      <DependentUpon>201409201647591_v3DB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201409231613293_v4DB.cs" />
+    <Compile Include="Migrations\201409231613293_v4DB.Designer.cs">
+      <DependentUpon>201409231613293_v4DB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201409242050184_v5DB.cs" />
+    <Compile Include="Migrations\201409242050184_v5DB.Designer.cs">
+      <DependentUpon>201409242050184_v5DB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201412261527139_v6DB.cs" />
+    <Compile Include="Migrations\201412261527139_v6DB.Designer.cs">
+      <DependentUpon>201412261527139_v6DB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503042021248_v7DB.cs" />
+    <Compile Include="Migrations\201503042021248_v7DB.Designer.cs">
+      <DependentUpon>201503042021248_v7DB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503202108153_v8DB.cs" />
+    <Compile Include="Migrations\201503202108153_v8DB.Designer.cs">
+      <DependentUpon>201503202108153_v8DB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503241353317_v9DB.cs" />
+    <Compile Include="Migrations\201503241353317_v9DB.Designer.cs">
+      <DependentUpon>201503241353317_v9DB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Repository\Abstract\IRepository.cs" />
+    <Compile Include="Repository\Concrete\Repository.cs" />
+    <Compile Include="Repository\Configuration\ConnectionContext.cs" />
+    <Compile Include="Entity\BaseEntity.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201409191242321_v1DB.resx">
+      <DependentUpon>201409191242321_v1DB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201409201602255_v2DB.resx">
+      <DependentUpon>201409201602255_v2DB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201409201647591_v3DB.resx">
+      <DependentUpon>201409201647591_v3DB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201409231613293_v4DB.resx">
+      <DependentUpon>201409231613293_v4DB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201409242050184_v5DB.resx">
+      <DependentUpon>201409242050184_v5DB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412261527139_v6DB.resx">
+      <DependentUpon>201412261527139_v6DB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503042021248_v7DB.resx">
+      <DependentUpon>201503042021248_v7DB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503202108153_v8DB.resx">
+      <DependentUpon>201503202108153_v8DB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503241353317_v9DB.resx">
+      <DependentUpon>201503241353317_v9DB.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

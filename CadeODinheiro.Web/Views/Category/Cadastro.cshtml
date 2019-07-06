@@ -1,0 +1,95 @@
+﻿@model CadeODinheiro.Core.Entity.Category
+@{
+    ViewBag.Title = "Cadastro";
+    Layout = "~/Views/Shared/_ContentFormLayout.cshtml";
+}
+
+@section headerWidget{
+    <h2>Categoria</h2>
+    &nbsp;&nbsp;<i id="divLoading" style="display: none" class="fa fa-cog fa-2x fa-spin"></i>
+}
+
+@using (Ajax.BeginForm("Cadastro", "Category", new AjaxOptions()
+{
+    HttpMethod = "Post",
+    LoadingElementId = "divLoading",
+    OnSuccess = "OnEndProccessMensagemComReload"
+},
+    new { @class = "smart-form" }))
+{
+    @Html.AntiForgeryToken()
+    <fieldset>
+        <section>
+            <div style="color:red;">
+                @Html.ValidationSummary()
+            </div>
+        </section>
+        @Html.TextBoxFor(e => e.sID, new { @readonly = "readonly", style = "display: none;" })
+        @Html.TextBoxFor(e => e.sUserID, new { @readonly = "readonly", style = "display: none;" })
+        <div class="row">
+            <section class="col col-10">
+                <label class="label">@Html.LabelFor(e => e.descricao)</label>
+                <label class="input">
+                    @Html.EditorFor(e => e.descricao)
+                </label>
+            </section>
+        </div>
+        <div class="row">
+            <section>
+                <label class="label">@Html.LabelFor(e => e.CategoryType)</label>
+                <div class="inline-group">
+                    <label class="radio">
+                        @if (Model.CategoryType == CadeODinheiro.Core.Entity.Enum.CategoryType.Despesa || string.IsNullOrEmpty(Model.descricao)) 
+                        { 
+                            <input type="radio" class="tipoPessoa-trigger" name="CategoryType" value="@CadeODinheiro.Core.Entity.Enum.CategoryType.Despesa" checked="checked">
+                        }
+                        else
+                        {
+                            <input type="radio" class="tipoPessoa-trigger" name="CategoryType" value="@CadeODinheiro.Core.Entity.Enum.CategoryType.Despesa">
+                        }
+                        <i></i>Despesa
+                    </label>
+                    <label class="radio">
+                        @if (Model.CategoryType == CadeODinheiro.Core.Entity.Enum.CategoryType.Receita)
+                        {
+                            <input type="radio" class="tipoPessoa-trigger" name="CategoryType" value="@CadeODinheiro.Core.Entity.Enum.CategoryType.Receita" checked="checked">
+                        }
+                        else
+                        {
+                            <input type="radio" class="tipoPessoa-trigger" name="CategoryType" value="@CadeODinheiro.Core.Entity.Enum.CategoryType.Receita">
+                        }
+                        <i></i>Receita
+                    </label>
+                    <label class="radio">
+                        @if (Model.CategoryType == CadeODinheiro.Core.Entity.Enum.CategoryType.Transferencia)
+                        {
+                            <input type="radio" class="tipoPessoa-trigger" name="CategoryType" value="@CadeODinheiro.Core.Entity.Enum.CategoryType.Transferencia" checked="checked">
+                        }
+                        else
+                        {
+                            <input type="radio" class="tipoPessoa-trigger" name="CategoryType" value="@CadeODinheiro.Core.Entity.Enum.CategoryType.Transferencia">
+                        }
+                        <i></i>Transferência 
+                    </label>
+                    <label class="radio">
+                        @if (Model.CategoryType == CadeODinheiro.Core.Entity.Enum.CategoryType.PagamentoCartaoCredito)
+                        {
+                            <input type="radio" class="tipoPessoa-trigger" name="CategoryType" value="@CadeODinheiro.Core.Entity.Enum.CategoryType.PagamentoCartaoCredito" checked="checked">
+                        }
+                        else
+                        {
+                            <input type="radio" class="tipoPessoa-trigger" name="CategoryType" value="@CadeODinheiro.Core.Entity.Enum.CategoryType.PagamentoCartaoCredito">
+                        }
+                        <i></i>Pagamento de Cartão de Crédito
+                    </label>
+                </div>
+            </section>
+        </div>
+    </fieldset>
+    <footer>
+        <button type="submit" class="btn btn-primary" value="Gravar">
+            Gravar
+        </button>
+    </footer>
+
+}

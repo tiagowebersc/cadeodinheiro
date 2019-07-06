@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:tns="http://services.senior.com.br" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" name="g5-senior-services" targetNamespace="http://services.senior.com.br" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xsd:schema>
+      <xsd:import schemaLocation="http://tbos.cloudapp.net:9090/g5-senior-services/sapiens_Synccom_tbos_pat_carregabens?xsd=1" namespace="http://services.senior.com.br" />
+    </xsd:schema>
+  </types>
+  <message name="carreganome">
+    <part name="user" type="xsd:string" />
+    <part name="password" type="xsd:string" />
+    <part name="encryption" type="xsd:int" />
+    <part name="parameters" type="tns:carregabenscarreganomeIn" />
+  </message>
+  <message name="carreganomeResponse">
+    <part name="result" type="tns:carregabenscarreganomeOut" />
+  </message>
+  <message name="buscadados">
+    <part name="user" type="xsd:string" />
+    <part name="password" type="xsd:string" />
+    <part name="encryption" type="xsd:int" />
+    <part name="parameters" type="tns:carregabensbuscadadosIn" />
+  </message>
+  <message name="buscadadosResponse">
+    <part name="result" type="tns:carregabensbuscadadosOut" />
+  </message>
+  <portType name="sapiens_Synccom_tbos_pat_carregabens">
+    <operation name="carreganome" parameterOrder="user password encryption parameters">
+      <input wsam:Action="http://services.senior.com.br/sapiens_Synccom_tbos_pat_carregabens/carreganomeRequest" message="tns:carreganome" />
+      <output wsam:Action="http://services.senior.com.br/sapiens_Synccom_tbos_pat_carregabens/carreganomeResponse" message="tns:carreganomeResponse" />
+    </operation>
+    <operation name="buscadados" parameterOrder="user password encryption parameters">
+      <input wsam:Action="http://services.senior.com.br/sapiens_Synccom_tbos_pat_carregabens/buscadadosRequest" message="tns:buscadados" />
+      <output wsam:Action="http://services.senior.com.br/sapiens_Synccom_tbos_pat_carregabens/buscadadosResponse" message="tns:buscadadosResponse" />
+    </operation>
+  </portType>
+  <binding name="sapiens_Synccom_tbos_pat_carregabensPortBinding" type="tns:sapiens_Synccom_tbos_pat_carregabens">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <operation name="carreganome">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://services.senior.com.br" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://services.senior.com.br" />
+      </output>
+    </operation>
+    <operation name="buscadados">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://services.senior.com.br" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://services.senior.com.br" />
+      </output>
+    </operation>
+  </binding>
+  <service name="g5-senior-services">
+    <port name="sapiens_Synccom_tbos_pat_carregabensPort" binding="tns:sapiens_Synccom_tbos_pat_carregabensPortBinding">
+      <soap:address location="http://tbos.cloudapp.net:9090/g5-senior-services/sapiens_Synccom_tbos_pat_carregabens" />
+    </port>
+  </service>
+</definitions>

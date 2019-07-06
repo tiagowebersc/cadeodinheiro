@@ -1,0 +1,16 @@
+﻿@model DateTime
+@using System.Globalization;
+
+@{
+    var nome = ViewData.TemplateInfo.GetFullHtmlFieldName("");
+    var id = ViewData.TemplateInfo.GetFullHtmlFieldId("");
+    DateTime value = (DateTime)ViewData["value"];
+
+    <input type="text" class="form-control" name="@nome" id="@id" value="@value" placeholder="@ViewData["placeholder"]" data-mask="99/99/9999" data-mask-placeholder="_">
+    <script>
+        $('#@id').datepicker({
+            format: "dd/mm/yyyy"
+        });
+        $('#@id').datepicker('update', '@value.ToString("dd/MM/yyyy")');        
+    </script>
+}

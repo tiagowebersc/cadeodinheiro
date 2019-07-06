@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "Index";
+
+}
+
+<h2>Home</h2>
+
+@section loginInfo{
+    <span>
+        @{
+            <img src="~/Content/img/img_user.png" />
+        }
+        <span>
+            @TempData["NomeUsuario"]
+        </span>
+    </span>
+}
+
+@section welcome{
+    <span class="font-md">@TempData["MensagemBemVindo"]</span>
+}
+
+@section loginInfoMobile {
+    <span>
+        <i class="fa fa-angle-down"></i>
+    </span>
+}

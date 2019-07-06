@@ -1,0 +1,375 @@
+﻿@model CadeODinheiro.Core.DTO.HomeModel
+@{
+    ViewBag.Title = "Pagina Inicial";
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+
+}
+
+@section headerWidgetA {
+    <h2>Resumo das Contas</h2>
+    &nbsp;&nbsp;<i id="divLoading" style="display: none" class="fa fa-cog fa-2x fa-spin"></i>
+}
+
+
+@section widgetA {
+    <div class="smart-form client-form">
+    <fieldset style="padding: 0px 0px 0px;">
+        <div class="table-responsive">
+            <table class="table table-bordered col-xs-12 col-sm-12 col-md-12 col-lg-12" style="font-size: small;">
+                <thead>
+                    <tr>
+                        <th class="col-xs-8 col-sm-8 col-md-8 col-lg-8 text-align-center">Conta</th>
+                        <th class="col-xs-4 col-sm-4 col-md-4 col-lg-4 text-align-center">Saldo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var p in Model.listaContas)
+                    {
+                        <tr>
+                            <td align="left">
+                                @p.sNome
+                            </td>
+                            <td align="center">
+                                @p.dSaldo.ToString("C")
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </fieldset>
+</div>
+
+}
+
+@section headerWidgetB {
+    <h2>Resumo do Consumo Mensal</h2>
+    
+}
+
+@section widgetB {
+@using (Ajax.BeginForm("PaginaInicial", "Home", new AjaxOptions()
+    {
+        HttpMethod = "Post",
+        LoadingElementId = "divLoading",
+        OnSuccess = "OnEndProccessMensagemComReload"
+    },
+        new { @class = "smart-form" }))
+{
+    @Html.AntiForgeryToken()
+    <table width="100%">
+        <tr>
+            @Html.TextBoxFor(e => e.sListaResumoMesAtual, new { @readonly = "readonly", style = "display: none;" })
+            <td style="width: 50%">
+                Mês Atual
+                @*<div id="chartMesAtual" style="height: 260px; width: 100%; position: relative;" class="jqplot-target"></div>*@
+                <div id="chartMesAtual" style="height: 260px; width: 100%; position: relative; font-size: 14px; line-height: 1.2em;"></div>
+
+                <table class="table table-bordered col-xs-12 col-sm-12 col-md-12 col-lg-12" style="font-size: smaller;">
+                    <thead>
+                        <tr>
+                            <th class="col-xs-4 col-sm-4 col-md-4 col-lg-4 text-align-center" style="padding: 1px;">Categoria</th>
+                            <th class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-align-right" style="padding: 1px;">Valor</th>
+                            <th class="col-xs-4 col-sm-4 col-md-4 col-lg-4 text-align-center" style="padding: 1px;">Categoria</th>
+                            <th class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-align-right" style="padding: 1px;">Valor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @{
+                            for (int i = 0; i < Model.listaResumoMesAtual.Count; i += 2)
+                            { 
+                            <tr>
+                                <td align="left" style="padding: 1px;">
+                                    <a href="javascript:void(0);" class="btn btn-default" role="button" onclick="criaDialogoResumoCategoria('@Model.listaResumoMesAtual[i].sMesAno@Model.listaResumoMesAtual[i].sCategoriaID','@Model.listaResumoMesAtual[i].sDescricao');">@Model.listaResumoMesAtual[i].sDescricao</a>
+                                    @*<button class="btn btn-default" type="submit" name="sMesAnoCategoriaID" value="@Model.listaResumoMesAtual[i].sMesAno@Model.listaResumoMesAtual[i].sCategoriaID">@Model.listaResumoMesAtual[i].sDescricao</button>*@
+                                </td>
+                                <td align="center" style="padding: 1px;">
+                                    @Model.listaResumoMesAtual[i].dValor.ToString("C")
+                                </td>
+                                @if (Model.listaResumoMesAtual.Count > (i + 1))
+                                {
+                                    <td align="left" style="padding: 1px;">
+                                        <a href="javascript:void(0);" class="btn btn-default" role="button" onclick="criaDialogoResumoCategoria('@Model.listaResumoMesAtual[i + 1].sMesAno@Model.listaResumoMesAtual[i + 1].sCategoriaID','@Model.listaResumoMesAtual[i + 1].sDescricao');">@Model.listaResumoMesAtual[i + 1].sDescricao</a>
+                                        @*<button class="btn btn-default" type="submit" name="sMesAnoCategoriaID" value="@Model.listaResumoMesAtual[i + 1].sMesAno@Model.listaResumoMesAtual[i + 1].sCategoriaID">@Model.listaResumoMesAtual[i + 1].sDescricao</button>*@
+                                    </td>
+                                    <td align="center" style="padding: 1px;">
+                                        @Model.listaResumoMesAtual[i + 1].dValor.ToString("C")
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td align="left" style="padding: 1px;"></td><td align="center" style="padding: 1px;"></td>
+                                }
+                            </tr>
+                            }
+                        }
+
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            @Html.TextBoxFor(e => e.sListaResumoMesAnterior, new { @readonly = "readonly", style = "display: none;" })
+
+            <td style="width: 50%">
+                Mês Anterior
+                <div id="chartMesAnterior" style="height: 260px; width: 100%; position: relative;" class="jqplot-target"></div>
+                <table class="table table-bordered col-xs-12 col-sm-12 col-md-12 col-lg-12" style="font-size: smaller;">
+                    <thead>
+                        <tr>
+                            <th class="col-xs-4 col-sm-4 col-md-4 col-lg-4 text-align-center" style="padding: 1px;">Categoria</th>
+                            <th class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-align-right" style="padding: 1px;">Valor</th>
+                            <th class="col-xs-4 col-sm-4 col-md-4 col-lg-4 text-align-center" style="padding: 1px;">Categoria</th>
+                            <th class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-align-right" style="padding: 1px;">Valor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            for (int i = 0; i < Model.listaResumoMesAnterior.Count; i += 2)
+                            {
+                                <tr>
+                                    <td align="left" style="padding: 1px;">
+                                        <a href="javascript:void(0);" class="btn btn-default" role="button" onclick="criaDialogoResumoCategoria('@Model.listaResumoMesAnterior[i].sMesAno@Model.listaResumoMesAnterior[i].sCategoriaID', '@Model.listaResumoMesAnterior[i].sDescricao');">@Model.listaResumoMesAnterior[i].sDescricao</a>
+                                    </td>
+                                    <td align="center" style="padding: 1px;">
+                                        @Model.listaResumoMesAnterior[i].dValor.ToString("C")
+                                    </td>
+                                    @if (Model.listaResumoMesAnterior.Count > (i + 1))
+                                    {
+                                        <td align="left" style="padding: 1px;">
+                                            <a href="javascript:void(0);" class="btn btn-default" role="button" onclick="criaDialogoResumoCategoria('@Model.listaResumoMesAnterior[i + 1].sMesAno@Model.listaResumoMesAnterior[i + 1].sCategoriaID', '@Model.listaResumoMesAnterior[i + 1].sDescricao');">@Model.listaResumoMesAnterior[i + 1].sDescricao</a>
+                                        </td>
+                                        <td align="center" style="padding: 1px;">
+                                            @Model.listaResumoMesAnterior[i + 1].dValor.ToString("C")
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td align="left" style="padding: 1px;"></td>
+                                        <td align="center" style="padding: 1px;"></td>
+                                    }
+                                </tr>
+                            }
+                        }
+
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </table>
+}
+}
+
+@section headerWidgetC {
+    <h2>Notificações</h2>   
+}
+
+@section widgetC {
+    @using (Ajax.BeginForm("PaginaInicial", "Home", new AjaxOptions()
+    {
+        HttpMethod = "Post",
+        LoadingElementId = "divLoading",
+        OnSuccess = "OnEndProccessMensagemComReload"
+    },
+        new { @class = "smart-form" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="table-responsive">
+            @if (Model.listaNotificacoes.Count > 0)
+    {
+        <div class="alert alert-warning alert-block" style="padding-top: 0px; padding-right: 0px; padding-left: 0px; padding-bottom: 0px;">
+            <h3 class="alert-heading">Há Notificações. Total: @Model.listaNotificacoes.Count</h3>
+                </div>
+    }
+            <table class="table table-bordered col-xs-12 col-sm-12 col-md-12 col-lg-12" style="font-size: small;">
+                <thead>
+                    <tr>
+                        <th class="col-xs-5 col-sm-5 col-md-5 col-lg-5 text-align-center">Descrição</th>
+                        <th class="col-xs-3 col-sm-3 col-md-3 col-lg-3 text-align-center">Categoria</th>
+                        <th class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-align-center" align="center">Data</th>
+                        <th class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-align-center" align="center">Valor</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var p in Model.listaNotificacoes)
+                    {
+                        <tr>
+                            <td align="left">
+                                @p.sDescricao
+                            </td>
+                            <td align="left">
+                                @p.sCategoriaDescricao
+                            </td>
+                            <td align="center">
+                                @(((DateTime)p.dData).ToString("dd/MM/yyyy"))
+                            </td>
+                            <td align="center">
+                                @p.dValorPrevisto.ToString("C")
+                            </td>
+                            <td>
+                                <button class="btn btn-primary" type="submit" name="sNotificacaoID" value="@p.sID">Registrar</button>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+
+        </div>
+        <input id="sDialogoMesAnoCategoriaID" name="sDialogoMesAnoCategoriaID" type="text" readonly="readonly" style="visibility:hidden;" />
+    }
+}
+
+<script type="text/javascript">
+    var $dialog;
+
+    $(document).ready(function () {
+        criaPizzaAtual($("#sListaResumoMesAtual").val());
+        criaPizzaAnterior($("#sListaResumoMesAnterior").val());
+    });
+
+    function labelFormatter(label, series) {
+        return "<div style='font-size:8pt; text-align:center; padding:2px; color:white;'>" + Math.round(series.percent) + "%</div>";
+    }
+
+    $(window).bind('resize', function () {
+        criaPizzaAtual($("#sListaResumoMesAtual").val());
+        criaPizzaAnterior($("#sListaResumoMesAnterior").val());
+    }).trigger('resize');
+
+    function criaPizzaAtual(campo) {
+        if (campo != null) {
+            if (campo.length > 0) {
+                $("#chartMesAtual").html("");
+
+                lista = campo.split("|&");
+
+                posiLista = 0;
+                var data = [], series = (lista.length / 2);
+                for (var i = 0; i < series; i++) {
+                    posiLista = i * 2;
+                    data[i] = {
+                        label: lista[posiLista],
+                        data: parseFloat(lista[posiLista + 1])
+                    }
+                }
+
+                var placeholder = $("#chartMesAtual");
+
+                placeholder.unbind();
+
+                $.plot('#chartMesAtual', data, {
+                    series: {
+                        pie: {
+                            show: true,
+                            radius: 1,
+                            tilt: 0.5,
+                            label: {
+                                show: true,
+                                radius: 0.8,
+                                formatter: labelFormatter,
+                                background: {
+                                    opacity: 0.8
+                                }
+                            },
+                            combine: {
+                                label: '...',
+                                color: '#999',
+                                threshold: 0.02
+                            }
+                        }
+                    },
+                    legend: {
+                        show: true
+                    }
+                });
+            }
+        }
+    }
+
+    function criaPizzaAnterior(campo) {
+        if (campo != null) {
+            if (campo.length > 0) {
+                $("#chartMesAnterior").html("");
+                lista = campo.split("|&");
+
+                posiLista = 0;
+                var data = [], series = (lista.length / 2);
+                for (var i = 0; i < series; i++) {
+                    posiLista = i * 2;
+                    data[i] = {
+                        label: lista[posiLista],
+                        data: parseFloat(lista[posiLista + 1])
+                    }
+                }
+
+                var placeholder = $("#chartMesAnterior");
+
+                placeholder.unbind();
+
+                $.plot('#chartMesAnterior', data, {
+                    series: {
+                        pie: {
+                            show: true,
+                            radius: 1,
+                            tilt: 0.5,
+                            label: {
+                                show: true,
+                                radius: 0.8,
+                                formatter: labelFormatter,
+                                background: {
+                                    opacity: 0.8
+                                }
+                            },
+                            combine: {
+                                label: '...',
+                                color: '#999',
+                                threshold: 0.02
+                            }
+                        }
+                    },
+                    legend: {
+                        show: true
+                    }
+                });
+            }
+        }
+    }
+
+    function criaDialogoResumoCategoria(mesAnoCatID, descricao) {
+        $('body').append('<div id="divDialogoListaResumoCategoria"></div>');
+        $("#sDialogoMesAnoCategoriaID").val(mesAnoCatID);
+
+        $dialog = $('#divDialogoListaResumoCategoria')
+                    .dialog({
+                        width: 700,
+                        modal: true,
+                        closeOnEscape: true,
+                        position: { my: "center top", at: "center top" },
+                        title: descricao
+                    });
+
+        ListaResumoCategoria(1);
+
+        $dialog.dialog('open');
+    }
+
+    function ListaResumoCategoria(pag) {
+        $('#divDialogoListaResumoCategoria').html('<i id="divLoading" class="fa fa-cog fa-2x fa-spin"></i>');
+
+        var mesCategoria = $("#sDialogoMesAnoCategoriaID").val();
+        $.ajax({
+            url: "Home/ListaResumoCategoria",
+            type: "get",
+            async: false,
+            data: { pagina: pag, sMesAnoCategoriaID: mesCategoria },
+            success: function (content) {
+                $dialog.html(content);
+            }
+        });
+    }
+
+ </script>

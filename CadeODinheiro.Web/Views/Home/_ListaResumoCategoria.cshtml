@@ -1,0 +1,86 @@
+﻿@model PagedList.IPagedList<CadeODinheiro.Core.DTO.ResumoCategoriaMesModel>
+<fieldset>
+    <div class="row">
+        <table class="table table-bordered table-hover col-lg-12" style="font-size: inherit;">
+            <thead>
+                <tr>
+                    <th class="col-xs-2 text-align-center" style="padding: 1px;">Data</th>
+                    <th class="col-xs-5 text-align-left" style="padding: 1px;">Descrição</th>
+                    <th class="col-xs-3 text-align-left" style="padding: 1px;">Conta</th>
+                    <th class="col-xs-2 text-align-right" style="padding: 1px;">Valor</th>
+                </tr>
+            </thead>
+            <tbody>
+                    @{bool bColore = true;}
+                    
+                    @foreach (CadeODinheiro.Core.DTO.ResumoCategoriaMesModel rcm in Model)
+                    {
+                        bColore = !bColore;
+                        if (bColore)
+                        {
+                            <tr>
+                                <td align="center" style="padding: 1px;">
+                                    @rcm.dData.ToString("dd/MM/yyyy")
+                                </td>
+                                <td align="left" style="padding: 1px;">
+                                    @rcm.sDescricao
+                                </td>
+                                <td align="left" style="padding: 1px;">
+                                    @rcm.sDescConta
+                                </td>
+                                <td align="right" style="padding: 1px;">
+                                    @rcm.dValor.ToString("C")
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            <tr style="background-color: lightgray;">
+                                <td align="center" style="padding: 1px;">
+                                    @rcm.dData.ToString("dd/MM/yyyy")
+                                </td>
+                                <td align="left" style="padding: 1px;">
+                                    @rcm.sDescricao
+                                </td>
+                                <td align="left" style="padding: 1px;">
+                                    @rcm.sDescConta
+                                </td>
+                                <td align="right" style="padding: 1px;">
+                                    @rcm.dValor.ToString("C")
+                                </td>
+                            </tr>
+                        }
+                    }                    
+                
+</tbody>
+        </table>
+    </div>
+    <div class="row" style="text-align: center; ">
+        @if (Model.HasPreviousPage)
+        {
+            <button type="button" name="navegaPagina" onclick="ListaResumoCategoria('1')"><<</button>
+            @Html.Raw(" ");
+            <button type="button" name="navegaPagina" onclick="ListaResumoCategoria(@((Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)-1))">< Anterior</button>
+        }
+        else
+        {
+            @:<<
+            @Html.Raw(" ");
+            @:< Anterior
+    }
+        | Página @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+        de @Model.PageCount |
+        @if (Model.HasNextPage)
+        {
+            <button type="button" name="navegaPagina" onclick="ListaResumoCategoria(@((Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)+1))">Próxima ></button>
+            @Html.Raw(" ");
+            <button type="button" name="navegaPagina" onclick="ListaResumoCategoria(@Model.PageCount)">>></button>
+        }
+        else
+        {
+            @:Próxima >
+            @Html.Raw(" ")
+            @:>>
+    }
+    </div>
+</fieldset>

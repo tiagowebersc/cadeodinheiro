@@ -1,0 +1,99 @@
+﻿@model CadeODinheiro.Core.DTO.ExtratoModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_ContentFormLayout.cshtml";
+}
+
+@section headerWidget{
+    <h2>Extrato</h2>
+    &nbsp;&nbsp;<i id="divLoading" style="display: none" class="fa fa-cog fa-2x fa-spin"></i>
+}
+
+@using (Ajax.BeginForm("Extrato", "ExpenseIncome", new AjaxOptions()
+{
+    HttpMethod = "Post",
+    LoadingElementId = "divLoading",
+    OnSuccess = "OnEndProccessMensagemSemRedirecionamento"
+},
+    new { @class = "smart-form" }))
+{
+    @Html.AntiForgeryToken()
+    <fieldset style="padding: 0px 15px 0px;">
+         <div class="row">
+             <section class="col col-4">
+                 <label class="label">Contas</label>
+                 <label class="select">
+                     @Html.DropDownListFor(x => x.sContaID, Model.listaContas, new { @class = "input-sm" })
+                     <i></i>
+                 </label>
+             </section>
+            <section class="col col-2">
+                <label class="label">Data de Início do Filtro</label>
+                <label class="input">
+                    @Html.EditorFor(l => l.dataInicioFiltro, new { value = @Model.dataInicioFiltro })
+                </label>
+            </section>
+            <section class="col col-2">
+                <label class="label">Data Final do Filtro</label>
+                <label class="input">
+                    @Html.EditorFor(l => l.dataFinalFiltro, new { value = @Model.dataFinalFiltro })
+                </label>
+            </section>
+            <section class="col col-4">
+                <a href="javascript:void(0);" class="btn btn-primary btn-lg" role="button" onclick="ListaExtrato(1);">Listar</a>
+                <button class="btn btn-primary btn-lg" type="submit" name="sLancamento" value="T">Gerar Lançamento</button>
+            </section>
+        </div>
+    
+        <div id="divListaExtrato">
+        </div>        
+    </fieldset>
+    <footer></footer>
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        ListaExtrato(1);
+    })
+
+    function ListaExtrato(pag) {
+        $('#divListaExtrato').html('<i id="divLoading" class="fa fa-cog fa-2x fa-spin"></i>');
+
+        var dataI = $("#dataInicioFiltro").val();
+        var dataF = $("#dataFinalFiltro").val();
+        var conta = $("#sContaID").val();
+        $.ajax({
+            url: "ExpenseIncome/ListaExtrato",
+            type: "get",
+            async: true,
+            data: { pagina: pag, dtInicio: dataI, dtFinal: dataF, sContaID: conta },
+            success: function (content) {
+                $('#divListaExtrato').html(content);
+            }
+        });
+    }
+
+    function ExcluirLancamento(lancamentoID, agrupadorID) {
+        $.ajax({
+            url: "ExpenseIncome/ExcluirLancamento",
+            type: "get",
+            data: { sLancamentoID: lancamentoID, sAgrupadorID: agrupadorID },
+            success: function (response, textStatus, jqXHR) {
+                if (response.Sucesso) {
+                    exibirMensagemSucesso("Sucesso", response.Mensagem);
+                    ListaExtrato(1);
+                }
+                else {
+                    exibirMensagemErro("Erro", response.Mensagem);
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert("error");
+            },
+            // callback handler that will be called on completion
+            // which means, either on success or error
+            complete: function () {
+            }
+        });
+    }
+</script>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://services.senior.com.br" targetNamespace="http://services.senior.com.br" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="carregabenscarreganomeIn">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="flowInstanceID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="flowName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="nomUsu" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="carregabenscarreganomeOut">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="erroExecucao" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="msgRetorno" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="nomCom" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="carregabensbuscadadosIn">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="codEmp" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="flowInstanceID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="flowName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="carregabensbuscadadosOut">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="bens" nillable="true" type="tns:carregabensbuscadadosOutBens" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="centrosCusto" nillable="true" type="tns:carregabensbuscadadosOutCentrosCusto" />
+      <xs:element minOccurs="0" name="erroExecucao" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="locais" nillable="true" type="tns:carregabensbuscadadosOutLocais" />
+      <xs:element minOccurs="0" name="msgRetorno" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="carregabensbuscadadosOutBens">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="codBar" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="codBem" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="codCcu" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="codFil" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="codLoc" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="desBem" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="numPla" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="carregabensbuscadadosOutCentrosCusto">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="codCcu" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="desCcu" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="carregabensbuscadadosOutLocais">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="codFil" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="codLoc" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="nomLoc" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

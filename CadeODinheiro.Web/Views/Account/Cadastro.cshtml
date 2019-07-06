@@ -1,0 +1,135 @@
+﻿@model CadeODinheiro.Core.Entity.Account
+@{
+    ViewBag.Title = "Cadastro";
+    Layout = "~/Views/Shared/_ContentFormLayout.cshtml";
+}
+
+@section headerWidget{
+    <h2>Conta</h2>
+    &nbsp;&nbsp;<i id="divLoading" style="display: none" class="fa fa-cog fa-2x fa-spin"></i>
+}
+
+@using (Ajax.BeginForm("Cadastro", "Account", new AjaxOptions()
+{
+    HttpMethod = "Post",
+    LoadingElementId = "divLoading",
+    OnSuccess = "OnEndProccessMensagemComReload"
+},
+    new { @class = "smart-form" }))
+{
+    @Html.AntiForgeryToken()
+    <fieldset>
+        <section>
+            <div style="color:red;">
+                @Html.ValidationSummary()
+            </div>
+        </section>
+        @Html.TextBoxFor(e => e.sID, new { @readonly = "readonly", style = "display: none;" })
+        @Html.TextBoxFor(e => e.sUserID, new { @readonly = "readonly", style = "display: none;" })
+        <div class="row">
+            <section class="col col-4">
+                <label class="label">@Html.LabelFor(e => e.sNome)</label>
+                <label class="input">
+                    @Html.EditorFor(e => e.sNome)
+                </label>
+            </section>
+        </div>
+        <div class="row">
+            <section class="col col-10">
+                <label class="label">@Html.LabelFor(e => e.sDescricao)</label>
+                <label class="input">
+                    @Html.EditorFor(e => e.sDescricao)
+                </label>
+            </section>
+        </div>
+        <div class="row">
+            <section class="col col-2">
+                <label class="label">@Html.LabelFor(e => e.iDiaFechamentoCC)</label>
+                <label class="input">
+                    <input id="iDiaFechamentoCC" name="iDiaFechamentoCC" type="text" class="money" value="@Model.iDiaFechamentoCC" style="text-align: right;" autocomplete="off" />
+                </label>
+            </section>
+        </div>
+        <div class="row">
+            <section>
+                <label class="label">@Html.LabelFor(e => e.AccountType)</label>
+                <div class="inline-group">
+                    <label class="radio">
+                        @if (Model.AccountType == CadeODinheiro.Core.Entity.Enum.AccountType.CartaoDeCredito || string.IsNullOrEmpty(Model.sNome)) 
+                        { 
+                            <input type="radio" class="tipoPessoa-trigger" name="AccountType" value="@CadeODinheiro.Core.Entity.Enum.AccountType.CartaoDeCredito" checked="checked">
+                        }
+                        else
+                        {
+                            <input type="radio" class="tipoPessoa-trigger" name="AccountType" value="@CadeODinheiro.Core.Entity.Enum.AccountType.CartaoDeCredito">
+                        }
+                        <i></i>Cartão de Crédito
+                    </label>
+                    <label class="radio">
+                        @if (Model.AccountType == CadeODinheiro.Core.Entity.Enum.AccountType.DinheiroVivo)
+                        {
+                            <input type="radio" class="tipoPessoa-trigger" name="AccountType" value="@CadeODinheiro.Core.Entity.Enum.AccountType.DinheiroVivo" checked="checked">
+                        }
+                        else
+                        {
+                            <input type="radio" class="tipoPessoa-trigger" name="AccountType" value="@CadeODinheiro.Core.Entity.Enum.AccountType.DinheiroVivo">
+                        }
+                        <i></i>Dinheiro Vivo
+                    </label>
+                    <label class="radio">
+                        @if (Model.AccountType == CadeODinheiro.Core.Entity.Enum.AccountType.Poupança)
+                        {
+                            <input type="radio" class="tipoPessoa-trigger" name="AccountType" value="@CadeODinheiro.Core.Entity.Enum.AccountType.Poupança" checked="checked">
+                        }
+                        else
+                        {
+                            <input type="radio" class="tipoPessoa-trigger" name="AccountType" value="@CadeODinheiro.Core.Entity.Enum.AccountType.Poupança">
+                        }
+                        <i></i>Poupança
+                    </label>
+                </div>
+            </section>
+        </div>
+        <div class="row">
+            <section>
+                <label class="label">@Html.LabelFor(e => e.StatusType)</label>
+                <div class="inline-group">
+                    <label class="radio">
+                        @if (Model.StatusType == CadeODinheiro.Core.Entity.Enum.StatusType.Ativo || string.IsNullOrEmpty(Model.sDescricao))
+                        {
+                            <input type="radio" class="tipoPessoa-trigger" name="StatusType" value="@CadeODinheiro.Core.Entity.Enum.StatusType.Ativo" checked="checked">
+                        }
+                        else
+                        {
+                            <input type="radio" class="tipoPessoa-trigger" name="StatusType" value="@CadeODinheiro.Core.Entity.Enum.StatusType.Ativo">
+                        }
+                        <i></i>Ativo
+                    </label>
+                    <label class="radio">
+                        @if (Model.StatusType == CadeODinheiro.Core.Entity.Enum.StatusType.Inativo)
+                        {
+                            <input type="radio" class="tipoPessoa-trigger" name="StatusType" value="@CadeODinheiro.Core.Entity.Enum.StatusType.Inativo" checked="checked">
+                        }
+                        else
+                        {
+                            <input type="radio" class="tipoPessoa-trigger" name="StatusType" value="@CadeODinheiro.Core.Entity.Enum.StatusType.Inativo">
+                        }
+                        <i></i>Inativo
+                    </label>
+                </div>
+            </section>
+        </div>
+
+    </fieldset>
+    <footer>
+        <button type="submit" class="btn btn-primary" value="Gravar">
+            Gravar
+        </button>
+    </footer>
+
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.money').mask('0000000000000000', { reverse: true });
+    });
+</script>

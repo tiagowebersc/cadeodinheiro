@@ -1,0 +1,73 @@
+﻿@model PagedList.IPagedList<CadeODinheiro.Core.DTO.ExtratoValor>
+<fieldset>
+    <div class="row">
+        <table class="table table-bordered table-hover col-lg-12" style="font-size: inherit;">
+            <thead>
+                <tr>
+                    <th class="col-sm-1 text-align-center">Data</th>
+                    <th class="col-sm-6 text-align-center">Descrição</th>
+                    <th class="col-sm-1 text-align-center">Conta</th>
+                    <th class="col-sm-1 text-align-center">Categoria</th>
+                    <th class="col-sm-1 text-align-center">Valor</th>
+                    <th class="col-sm-1 text-align-center">Alterar</th>
+                    <th class="col-sm-1 text-align-center">Excluir</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    string chBotao = "ExcluirLancamento('" + @item.sID + "', '" + @item.sAgrupadorID + "');";
+                    string estiloLinha = string.Empty;
+                    string descricaoExtrato = item.sDescricao;
+                    if (item.dValor >= 0) estiloLinha = "background-color: mediumaquamarine;"; else estiloLinha = "background-color: lightpink;";
+                    if (!string.IsNullOrEmpty(item.sAgrupadorID)) descricaoExtrato += " (" + item.iAgrupadorTotalOcorrencia + "x)";
+                        
+                    <tr style="@estiloLinha">
+                        <td align="left">@item.dData.ToString("dd/MM/yyyy")</td>
+                        <td align="left">@descricaoExtrato</td>
+                        <td align="left">@item.sDescConta</td>
+                        <td align="left">@item.sDescCategoria</td>
+                        <td align="right">@item.dValor.ToString("C")</td>
+                        @if (string.IsNullOrEmpty(item.sAgrupadorID))
+                        { 
+                            <td align="center"><button class="btn btn-default" type="submit" name="sLancamento" value='@item.sID'><i class="fa fa-pencil"></i></button></td>
+                        }
+                        else
+                        {
+                            <td align="center"><button class="btn btn-default" type="submit" name="sAgrupador" value='@item.sAgrupadorID'><i class="fa fa-pencil"></i></button></td>
+                        }
+                        <td align="center"><a href="javascript:void(0);" onclick='@chBotao' class="btn btn-default"><i class="fa fa-eraser"></i></a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="row" style="text-align: center; ">
+        @if (Model.HasPreviousPage)
+        {
+            <button type="button" name="navegaPagina" onclick="ListaExtrato('1')"><<</button>
+            @Html.Raw(" ");
+            <button type="button" name="navegaPagina" onclick="ListaExtrato(@((Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)-1))">< Anterior</button>
+        }
+        else
+        {
+            @:<<
+            @Html.Raw(" ");
+            @:< Anterior
+    }
+        | Página @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+        de @Model.PageCount |
+        @if (Model.HasNextPage)
+        {
+            <button type="button" name="navegaPagina" onclick="ListaExtrato(@((Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)+1))">Próxima ></button>
+            @Html.Raw(" ");
+            <button type="button" name="navegaPagina" onclick="ListaExtrato(@Model.PageCount)">>></button>
+        }
+        else
+        {
+            @:Próxima >
+            @Html.Raw(" ")
+            @:>>
+    }
+    </div>
+</fieldset>

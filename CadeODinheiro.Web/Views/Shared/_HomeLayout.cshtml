@@ -1,0 +1,85 @@
+﻿@{
+    ViewBag.Title = "_HomeLayout";
+}
+
+@Styles.Render("~/Content/CadeODinheiro")
+@Styles.Render("~/Content/boleto")
+
+<div class="row">
+
+</div>
+<section id="widget-grid" class="">
+    <div class="row">
+        <!-- NEW WIDGET START -->
+        <article class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <div class="jarviswidget jarviswidget-color-green" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-editbutton="false" id="wid-id-0">
+                <header>
+                    @RenderSection("headerWidgetA", true)
+                </header>
+                <div>
+                    <div class="jarviswidget-editbox">
+                        <input class="form-control" type="text">
+                    </div>
+
+                    <div class="widget-body">
+                        @RenderSection("widgetA", true)
+                    </div>
+                </div>
+            </div>
+
+            <div class="jarviswidget jarviswidget-color-red" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-editbutton="false" id="wid-id-2">
+                <header>
+                    @RenderSection("headerWidgetC", true)
+                </header>
+                <div>
+                    <div class="jarviswidget-editbox">
+                        <input class="form-control" type="text">
+                    </div>
+
+                    <div class="widget-body">
+                        @RenderSection("widgetC", true)
+                    </div>
+                </div>
+            </div>
+        </article>
+        <article class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <div class="jarviswidget jarviswidget-color-darken" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-editbutton="false" id="wid-id-1">
+                <header>
+                    @RenderSection("headerWidgetB", true)
+                </header>
+                <div>
+                    <div class="jarviswidget-editbox">
+                        <input class="form-control" type="text">
+                    </div>
+
+                    <div class="widget-body">
+                        @RenderSection("widgetB", true)
+                    </div>
+                </div>
+            </div>
+        </article>
+    </div>
+    <div class="row">
+        <!-- NEW WIDGET START -->
+        
+
+    </div>
+    
+    <div class="row">
+        <div class="col-sm-12">
+            @RenderBody()
+        </div>
+    </div>
+
+</section>
+
+<script type="text/javascript">
+    pageSetUp();
+
+    @RenderSection("scripts", false)
+    var pagefunction = function () {
+
+    };
+    pagefunction();
+</script>
+

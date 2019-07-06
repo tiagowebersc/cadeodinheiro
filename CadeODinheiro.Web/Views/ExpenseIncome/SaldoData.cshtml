@@ -1,0 +1,69 @@
+﻿@model CadeODinheiro.Core.DTO.SaldoDataModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_ContentFormLayout.cshtml";
+}
+
+@section headerWidget{
+    <h2>Saldo por Data</h2>
+    &nbsp;&nbsp;<i id="divLoading" style="display: none" class="fa fa-cog fa-2x fa-spin"></i>
+}
+
+@using (Ajax.BeginForm("SaldoData", "ExpenseIncome", new AjaxOptions()
+{
+    HttpMethod = "Post",
+    LoadingElementId = "divLoading",
+    OnSuccess = "OnEndProccessMensagemSemRedirecionamento"
+},
+    new { @class = "smart-form" }))
+{
+    @Html.AntiForgeryToken()
+    <fieldset style="padding: 0px 15px 0px;">
+        <div class="row">
+            <section class="col col-4">
+                <label class="label">Contas</label>
+                <label class="select">
+                    @Html.DropDownListFor(x => x.sContaID, Model.listaContas, new { @class = "input-sm" })
+                    <i></i>
+                </label>
+            </section>
+            <section class="col col-2">
+                <label class="label">Data Limite</label>
+                <label class="input">
+                    @Html.EditorFor(l => l.dataLimite, new { value = @Model.dataLimite })
+                </label>
+            </section>
+            <section class="col col-4">
+                <a href="javascript:void(0);" class="btn btn-primary btn-lg" role="button" onclick="ListaSaldoData(1);">Listar</a>
+            </section>
+        </div>
+
+        <div id="divListaSaldoData">
+        </div>
+        
+    </fieldset>
+    <footer></footer>
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        ListaSaldoData(1);
+    })
+
+    function ListaSaldoData(pag) {
+        $('#divListaSaldoData').html('<i id="divLoading" class="fa fa-cog fa-2x fa-spin"></i>');
+
+        var dataL = $("#dataLimite").val();
+        var conta = $("#sContaID").val();
+        $.ajax({
+            url: "ExpenseIncome/ListaSaldoData",
+            type: "get",
+            async: true,
+            data: { pagina: pag, dtLimite: dataL, sContaID: conta },
+            success: function (content) {
+                $('#divListaSaldoData').html(content);
+            }
+        });
+    }
+
+</script>

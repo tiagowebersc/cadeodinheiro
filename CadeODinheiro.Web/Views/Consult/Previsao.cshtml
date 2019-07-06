@@ -1,0 +1,321 @@
+﻿@model CadeODinheiro.Core.DTO.PrevisaoModel
+@{
+    ViewBag.Title = "Previsao";
+    Layout = "~/Views/Shared/_ContentFormLayout.cshtml";
+}
+
+@section headerWidget{
+    <h2>Previsões</h2>
+    &nbsp;&nbsp;<i id="divLoading" style="display: none" class="fa fa-cog fa-2x fa-spin"></i>
+}
+<div class="smart-form client-form">
+    @Html.TextBoxFor(e => e.sDataGrafico, new { @readonly = "readonly", style = "display: none;" })
+    <div style="box-sizing: border-box;
+	width: 100%;
+	height: 450px;
+	padding: 20px 15px 15px 15px;
+	margin: 15px auto 30px auto;
+	border: 1px solid #ddd;
+	background: #fff;
+	background: linear-gradient(#f6f6f6 0, #fff 50px);
+	background: -o-linear-gradient(#f6f6f6 0, #fff 50px);
+	background: -ms-linear-gradient(#f6f6f6 0, #fff 50px);
+	background: -moz-linear-gradient(#f6f6f6 0, #fff 50px);
+	background: -webkit-linear-gradient(#f6f6f6 0, #fff 50px);
+	box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+	-o-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+	-ms-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+	-moz-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+	-webkit-box-shadow: 0 3px 10px rgba(0,0,0,0.1);">
+        <div id="graficoDetalhado" style="float: left; width: 90%; height: 100%; font-size: 14px; line-height: 1.2em;"></div>
+        <p id="escolhaCategoria" style="float:right; width:10%;"></p>
+    </div>
+
+    <div id="tabs">
+        <ul>
+            <li>
+                <a href="#tabs-a">1 - @Model.sMes1.Substring(4, 2)/@Model.sMes1.Substring(0, 4)</a>
+            </li>
+            <li>
+                <a href="#tabs-b">2 - @Model.sMes2.Substring(4, 2)/@Model.sMes2.Substring(0, 4)</a>
+            </li>
+            <li>
+                <a href="#tabs-c">3 - @Model.sMes3.Substring(4, 2)/@Model.sMes3.Substring(0, 4)</a>
+            </li>
+            <li>
+                <a href="#tabs-d">4 - @Model.sMes4.Substring(4, 2)/@Model.sMes4.Substring(0, 4)</a>
+            </li>
+            <li>
+                <a href="#tabs-e">5 - @Model.sMes5.Substring(4, 2)/@Model.sMes5.Substring(0, 4)</a>
+            </li>
+            <li>
+                <a href="#tabs-f">6 - @Model.sMes6.Substring(4, 2)/@Model.sMes6.Substring(0, 4)</a>
+            </li>
+            <li>
+                <a href="#tabs-g">7 - @Model.sMes7.Substring(4, 2)/@Model.sMes7.Substring(0, 4)</a>
+            </li>
+            <li>
+                <a href="#tabs-h">8 - @Model.sMes8.Substring(4, 2)/@Model.sMes8.Substring(0, 4)</a>
+            </li>
+        </ul>
+        <div id="tabs-a">
+            <fieldset>
+                <div class="row">
+                    @Functions.MontaTabelaPrevisao(Model.lstMes1)
+                </div>
+                <div class="row">
+                    <table style ="font-size: small;">
+                        <tr>
+                            <td><strong>Despesas Previstas:</strong></td>
+                            <td>@Model.total1.ToString("C")</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Despesas Pagas:</strong></td>
+                            <td>@Model.totalPago1.ToString("C")</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Despesas Pendentes:</strong></td>
+                            <td>@Model.totalAPagar1.ToString("C")</td>
+                        </tr>
+                    </table>                  
+                </div>
+            </fieldset>
+        </div>
+        <div id="tabs-b">
+            <fieldset>
+                <div class="row">
+                    @Functions.MontaTabelaPrevisao(Model.lstMes2)
+                </div>
+                <div class="row">
+                    <table style="font-size: small;">
+                        <tr>
+                            <td><strong>Despesas Previstas:</strong></td>
+                            <td>@Model.total2.ToString("C")</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Despesas Pagas:</strong></td>
+                            <td>@Model.totalPago2.ToString("C")</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Despesas Pendentes:</strong></td>
+                            <td>@Model.totalAPagar2.ToString("C")</td>
+                        </tr>
+                    </table>
+                </div>
+            </fieldset>
+        </div>
+        <div id="tabs-c">
+            <fieldset>
+                <div class="row">
+                    @Functions.MontaTabelaPrevisao(Model.lstMes3)
+                </div>
+                <div class="row">
+                    <table style="font-size: small;">
+                        <tr>
+                            <td><strong>Despesas Previstas:</strong></td>
+                            <td>@Model.total3.ToString("C")</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Despesas Pagas:</strong></td>
+                            <td>@Model.totalPago3.ToString("C")</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Despesas Pendentes:</strong></td>
+                            <td>@Model.totalAPagar3.ToString("C")</td>
+                        </tr>
+                    </table>
+                </div>
+            </fieldset>
+        </div>
+        <div id="tabs-d">
+            <fieldset>
+                <div class="row">
+                    @Functions.MontaTabelaPrevisao(Model.lstMes4)
+                </div>
+                <div class="row">
+                    <table style="font-size: small;">
+                        <tr>
+                            <td><strong>Despesas Previstas:</strong></td>
+                            <td>@Model.total4.ToString("C")</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Despesas Pagas:</strong></td>
+                            <td>@Model.totalPago4.ToString("C")</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Despesas Pendentes:</strong></td>
+                            <td>@Model.totalAPagar4.ToString("C")</td>
+                        </tr>
+                    </table>
+                </div>
+            </fieldset>
+        </div>
+        <div id="tabs-e">
+            <fieldset>
+                <div class="row">
+                    @Functions.MontaTabelaPrevisao(Model.lstMes5)
+                </div>
+                <div class="row">
+                    <table style="font-size: small;">
+                        <tr>
+                            <td><strong>Despesas Previstas:</strong></td>
+                            <td>@Model.total5.ToString("C")</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Despesas Pagas:</strong></td>
+                            <td>@Model.totalPago5.ToString("C")</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Despesas Pendentes:</strong></td>
+                            <td>@Model.totalAPagar5.ToString("C")</td>
+                        </tr>
+                    </table>
+                </div>
+            </fieldset>
+        </div>
+        <div id="tabs-f">
+            <fieldset>
+                <div class="row">
+                    @Functions.MontaTabelaPrevisao(Model.lstMes6)
+                </div>
+                <div class="row">
+                    <table style="font-size: small;">
+                        <tr>
+                            <td><strong>Despesas Previstas:</strong></td>
+                            <td>@Model.total6.ToString("C")</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Despesas Pagas:</strong></td>
+                            <td>@Model.totalPago6.ToString("C")</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Despesas Pendentes:</strong></td>
+                            <td>@Model.totalAPagar6.ToString("C")</td>
+                        </tr>
+                    </table>
+                </div>
+            </fieldset>
+        </div>
+        <div id="tabs-g">
+            <fieldset>
+                <div class="row">
+                    @Functions.MontaTabelaPrevisao(Model.lstMes7)
+                </div>
+                <div class="row">
+                    <table style="font-size: small;">
+                        <tr>
+                            <td><strong>Despesas Previstas:</strong></td>
+                            <td>@Model.total7.ToString("C")</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Despesas Pagas:</strong></td>
+                            <td>@Model.totalPago7.ToString("C")</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Despesas Pendentes:</strong></td>
+                            <td>@Model.totalAPagar7.ToString("C")</td>
+                        </tr>
+                    </table>
+                </div>
+            </fieldset>
+        </div>
+        <div id="tabs-h">
+            <fieldset>
+                <div class="row">
+                    @Functions.MontaTabelaPrevisao(Model.lstMes8)
+                </div>
+                <div class="row">
+                    <table style="font-size: small;">
+                        <tr>
+                            <td><strong>Despesas Previstas:</strong></td>
+                            <td>@Model.total8.ToString("C")</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Despesas Pagas:</strong></td>
+                            <td>@Model.totalPago8.ToString("C")</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Despesas Pendentes:</strong></td>
+                            <td>@Model.totalAPagar8.ToString("C")</td>
+                        </tr>
+                    </table>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+</div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#tabs').tabs();
+            montaGrafico($("#sDataGrafico").val());
+        });
+
+        $(window).bind('resize', function () {
+            montaGrafico($("#sDataGrafico").val());
+        }).trigger('resize');
+
+        function montaGrafico(campo) {
+            debugger;
+            if (campo != null) {
+                if (campo.length > 0) {
+                    $("#graficoDetalhado").html("");
+                    $("#escolhaCategoria").html("");
+                    var dataGrafico = [];
+                    listaCategorias = campo.split("&&|");
+                    for (var c = 0; c < (listaCategorias.length - 1) ; c++) {
+                        lista = listaCategorias[c].split("&|");
+                        sCodCategoria = lista[0];
+                        sDescCategoria = lista[1];
+                        posiLista = 0;
+                        var dataItem = [], series = (lista.length / 2);
+                        for (var i = 1; i < series; i++) {
+                            posiLista = i * 2;
+                            dataItem[i] = [parseFloat(lista[posiLista]), parseFloat(lista[posiLista + 1])]
+                        }
+                        dataGrafico[sCodCategoria] = { label: sDescCategoria, data: dataItem };
+                    }
+                    var i = 0;
+                    $.each(dataGrafico, function (key, val) {
+                        val.color = i;
+                        ++i;
+                    });
+
+                    // insert checkboxes
+                    var choiceContainer = $("#escolhaCategoria");
+                    $.each(dataGrafico, function (key, val) {
+                        choiceContainer.append("<br/><input type='checkbox' name='" + key +
+                            "' checked='checked' id='id" + key + "'></input>" +
+                            "<label for='id" + key + "'>"
+                            + val.label + "</label>");
+                    });
+
+                    function plotAccordingToChoices() {
+
+                        var data = [];
+                        choiceContainer.find("input:checked").each(function () {
+                            var key = $(this).attr("name");
+                            if (key && dataGrafico[key]) {
+                                data.push(dataGrafico[key]);
+                            }
+                        });
+
+                        if (data.length > 0) {
+                            $.plot("#graficoDetalhado", data, {
+                                yaxis: {
+                                    min: 0
+                                },
+                                xaxis: {
+                                    tickDecimals: 0
+                                }
+                            });
+                        }
+                    }
+
+                    choiceContainer.find("input").click(plotAccordingToChoices);
+
+                    plotAccordingToChoices();
+                }
+            }
+        }
+    </script>

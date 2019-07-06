@@ -1,0 +1,213 @@
+﻿@model CadeODinheiro.Core.DTO.ExpenseIncomeModel
+@{
+    ViewBag.Title = "Lancamento";
+    Layout = "~/Views/Shared/_ContentFormLayout.cshtml";
+}
+
+@section headerWidget{
+    <h2>Registrar Lançamento</h2>
+    &nbsp;&nbsp;<i id="divLoading" style="display: none" class="fa fa-cog fa-2x fa-spin"></i>
+}
+
+@using (Ajax.BeginForm("Lancamento", "ExpenseIncome", new AjaxOptions()
+{
+    HttpMethod = "Post",
+    LoadingElementId = "divLoading",
+    OnSuccess = "retornoProcessamento"
+},
+    new { @class = "smart-form", @id = "formLancamento" }))
+{
+    @Html.AntiForgeryToken()
+    <fieldset>
+        <section>
+            <div style="color:red;">
+                @Html.ValidationSummary()
+            </div>
+        </section>
+        @Html.TextBoxFor(e => e.sID, new { @readonly = "readonly", style = "display: none;" })
+        @Html.TextBoxFor(e => e.sConcatCartaoCredito, new { @readonly = "readonly", style = "display: none;" })
+        @*@Html.TextBoxFor(e => e.sNotificationID, new { @readonly = "readonly", style = "display: none;" })*@
+        <div class="row">
+            <section class="col col-12">
+                <label class="label">@Html.LabelFor(e => e.sDescricao)</label>
+                <label class="input">
+                    @Html.EditorFor(e => e.sDescricao)
+                </label>
+            </section>
+        </div>
+        <div class="row">
+            <section class="col col-6">
+                <label class="label">@Html.LabelFor(e => e.sCategoryID)</label>
+                <label class="select">
+                    @Html.DropDownListFor(x => x.sCategoryID, Model.listaCategorias, new { @class = "input-sm" })                                        
+                    <i></i>
+                </label>
+            </section>
+        </div>
+        <div class="row">
+            <section class="col col-6">
+                <label class="label">@Html.LabelFor(e => e.sNotificationID)</label>
+                <label class="select">
+                    @Html.DropDownListFor(x => x.sNotificationID, Model.listaNotifications, new { @class = "input-sm" })
+                    <i></i>
+                </label>
+            </section>
+            <div id="divMostrarOpcaoDataBase" style="display: none;">
+                <section class="col col-3">
+                    <label class="label">.</label>
+                    <label class="checkbox">
+                        @*<input data-val="true" data-val-required="O campo Data Base Diferente é obrigatório." id="bDataDiferente" name="bDataDiferente" type="checkbox" value="false">*@
+                        @Html.CheckBoxFor(e => e.bDataDiferente)
+                        <i></i>Alterar Data Base
+                    </label>
+                </section>
+                @if (Model.bDataDiferente)
+                {
+                    <div id="divDataBase">
+                        <section class="col col-3">
+                            <label class="label">@Html.LabelFor(e => e.dDataBase)</label>
+                            <label class="input">
+                                @Html.EditorFor(l => l.dDataBase, new { value = @Model.dDataBase })
+                            </label>
+                        </section>
+                    </div>
+                }
+                else
+                {
+                    <div id="divDataBase" style="display: none;">
+                        <section class="col col-3">
+                            <label class="label">@Html.LabelFor(e => e.dDataBase)</label>
+                            <label class="input">
+                                @Html.EditorFor(l => l.dDataBase, new { value = @Model.dDataBase })
+                            </label>
+                        </section>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="row">
+            <section class="col col-6">
+                <label class="label">@Html.LabelFor(e => e.sAccountID)</label>
+                <label class="select">
+                    @Html.DropDownListFor(x => x.sAccountID, Model.listaContas, new { @class = "input-sm" })
+                    <i></i>
+                </label>
+            </section>
+            <section class="col col-6">
+                <div id="divTotalParcelas" style="display: none;">
+                    <label class="label">@Html.LabelFor(e => e.iTotalParcelas)</label>
+                    <label class="select">
+                        <select id="iTotalParcelas" name="iTotalParcelas" class="input-sm">
+                            <option value="1">1x</option>
+                            <option value="2">2x</option>
+                            <option value="3">3x</option>
+                            <option value="4">4x</option>
+                            <option value="5">5x</option>
+                            <option value="6">6x</option>
+                            <option value="7">7x</option>
+                            <option value="8">8x</option>
+                            <option value="9">9x</option>
+                            <option value="10">10x</option>
+                            <option value="11">11x</option>
+                            <option value="12">12x</option>
+                            <option value="13">13x</option>
+                            <option value="14">14x</option>
+                            <option value="15">15x</option>
+                            <option value="16">16x</option>
+                            <option value="17">17x</option>
+                            <option value="18">18x</option>
+                        </select> <i></i>
+                    </label>
+                </div>
+            </section>
+        </div>
+        <div class="row">
+            <section class="col col-3">
+                <label class="label">@Html.LabelFor(e => e.dData)</label>
+                <label class="input">
+                    @Html.EditorFor(l => l.dData, new { value = @Model.dData })
+                </label>
+            </section>
+            <section class="col col-5">
+
+            </section>
+            <section class="col col-4">
+                <label class="label">@Html.LabelFor(e => e.dValor)</label>
+                <label class="input">
+                    @{
+                        double dTemp = Model.dValor * 100;
+                        if (Model.eCategoryType == CadeODinheiro.Core.Entity.Enum.CategoryType.PagamentoCartaoCredito)
+                        {
+                            <input id="dValor" name="dValor" type="text" class="money" value="@dTemp" style="text-align: right;" autocomplete="off" readonly="readonly"/>
+                        }
+                        else
+                        {
+                            <input id="dValor" name="dValor" type="text" class="money" value="@dTemp" style="text-align: right;" autocomplete="off" />
+                        }
+                    }
+                </label>
+            </section>
+        </div>
+    </fieldset>
+    <footer>
+        <button type="submit" class="btn btn-primary" id="btnGravar" value="Gravar">
+            Gravar
+        </button>
+    </footer>
+
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.money').mask('000000000000000,00', { reverse: true });
+        mostraParcelasCC();
+        mostraOpcaoDataBase();
+        $("#sDescricao").focus();
+    });
+    $("#bDataDiferente").change(function () {
+        if (this.checked) {
+            $('#dDataBase').val($('#dData').val());
+            $('#divDataBase').show();
+        } else {
+            $('#divDataBase').hide();
+        }
+    });
+
+    $("#sAccountID").change(function () {
+        mostraParcelasCC();
+    });
+
+    $("#sNotificationID").change(function () {
+        mostraOpcaoDataBase();
+    });
+
+    function mostraParcelasCC() {
+        id = $('#sID').val();
+        lista = $('#sConcatCartaoCredito').val();
+        atual = $('#sAccountID').val();
+        if ((lista.indexOf(atual) > -1) && id == "") {
+            $('#divTotalParcelas').show();
+        } else {
+            $('#divTotalParcelas').hide();
+        }
+    }
+    
+    function mostraOpcaoDataBase() {
+        valor = $('#sNotificationID').val();
+        if (valor != "") {
+            $('#divMostrarOpcaoDataBase').show();
+        } else {
+            $('#divMostrarOpcaoDataBase').hide();
+        }
+    }
+
+    $("#formLancamento").bind("submit", function (e) {
+        // On submit disable form submit button
+        $('#btnGravar', this).attr('disabled', 'disabled');
+    });
+
+    function retornoProcessamento(content) {
+        $("#btnGravar").prop("disabled", false);
+        OnEndProccessMensagemComReload(content);
+    }
+</script>

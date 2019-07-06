@@ -1,0 +1,273 @@
+﻿@model CadeODinheiro.Core.DTO.AuthModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="pt-br" id="extr-page">
+<head>
+    <meta charset="utf-8">
+    <title> CadeODinheiro | Login</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- #CSS Links -->
+    <!-- Basic Styles -->
+    @Styles.Render("~/Content/CadeODinheiro")
+    @Styles.Render("~/Content/themes/smartadmin")
+    <!--<link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="css/font-awesome.min.css">-->
+    <!-- SmartAdmin Styles : Please note (smartadmin-production.css) was created using LESS variables -->
+    <!--<link rel="stylesheet" type="text/css" media="screen" href="css/smartadmin-production.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="css/smartadmin-skins.min.css">-->
+    <!-- SmartAdmin RTL Support is under construction
+         This RTL CSS will be released in version 1.5
+    <link rel="stylesheet" type="text/css" media="screen" href="css/smartadmin-rtl.min.css"> -->
+    <!-- We recommend you use "your_style.css" to override SmartAdmin
+         specific styles this will also ensure you retrain your customization with each SmartAdmin update.
+    <link rel="stylesheet" type="text/css" media="screen" href="css/your_style.css"> -->
+    <!-- #FAVICONS -->
+    <link rel="shortcut icon" href="~/Content/img/favicon/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="~/Content/img/favicon/favicon.ico" type="image/x-icon">
+
+    <!-- #GOOGLE FONT -->
+    @*<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,400,700">*@
+
+    <!-- #APP SCREEN / ICONS -->
+    <!-- Specifying a Webpage Icon for Web Clip
+         Ref: https://developer.apple.com/library/ios/documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html -->
+    <link rel="apple-touch-icon" href="~/Content/img/splash/sptouch-icon-iphone.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="~/Content/img/splash/touch-icon-ipad.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="~/Content/img/splash/touch-icon-iphone-retina.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="~/Content/img/splash/touch-icon-ipad-retina.png">
+
+    <!-- iOS web-app metas : hides Safari UI Components and Changes Status Bar Appearance -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <!-- Startup image for web apps -->
+    <link rel="apple-touch-startup-image" href="~/Content/img/splash/ipad-landscape.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape)">
+    <link rel="apple-touch-startup-image" href="~/Content/img/splash/ipad-portrait.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait)">
+    <link rel="apple-touch-startup-image" href="~/Content/img/splash/iphone.png" media="screen and (max-device-width: 320px)">
+
+</head>
+
+<body class="smart-style-1 animated fadeInDown">
+    <!-- video from youtube, change here your url -- >
+
+    <div id="bgndVideo" class="player" data-poster="img/img1.jpg" data-property="{videoURL:'https://www.youtube.com/watch?v=jQfJhWc81Tw',containment:'body', autoPlay:true, showControls:false, startAt:1, opacity:0.4}"></div>
+    <div id="bg-video-controls">
+        <a id="bg-video-volume" class="icon exit-mute" href="#" title="MUDO">&nbsp;</a>
+        <a id="bg-video-play" class="icon exit-pause" href="#" title="PARAR">&nbsp;</a>
+    </div>
+
+    <!-- end video from youtube -->
+    <header id="header_login">
+        <div id="logo-group">
+            <span id="logo_login"><img id="img_login" alt="CadeODinheiro" src="~/Content/img/dinheiro.png" /></span>
+        </div>
+        <span id="extr-page-header-space">  <a href=@Url.Content("~/NewAccount") class="btn btn-primary">Criar Conta</a> </span>
+    </header>
+
+    <div id="main" role="main">
+
+        <!-- MAIN CONTENT -->
+        <div id="content" class="container">
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-7 col-lg-8 hidden-xs hidden-sm">
+                    <h1 class="txt-color-red login-header-big">Cadê o meu dinheiro</h1>
+                    <div class="hero">
+
+                        <div class="pull-left login-header-big">
+                            <h4 class="paragraph-header">"Se o dinheiro falasse o meu diria: Tchau!"</h4>
+                            @*<div class="login-app-icons">
+                                    <a href="javascript:void(0);" class="btn btn-danger btn-sm">Frontend Template</a>
+                                    <a href="javascript:void(0);" class="btn btn-danger btn-sm">Find out more</a>
+                                </div>*@
+                        </div>
+
+                        <img src="~/Content/img/dinheiroVoandoCarteira.jpg" class="pull-right display-image" alt="" style="width:210px">
+
+                    </div>
+
+                    @*<div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                <h5 class="about-heading">About SmartAdmin - Are you up to date?</h5>
+                                <p>
+                                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa.
+                                </p>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                <h5 class="about-heading">Not just your average template!</h5>
+                                <p>
+                                    Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi voluptatem accusantium!
+                                </p>
+                            </div>
+                        </div>*@
+
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-5 col-lg-4">
+                    <div class="well no-padding">
+                        <form action="Login" id="login-form" class="smart-form client-form" method="post">
+                            @Html.AntiForgeryToken()
+                            <header>
+                                Entrar
+                            </header>
+
+                            <fieldset>
+                                <label class="CadeODinheiro-label-warnning">@TempData["msgLogin"]</label>
+                                <section>
+                                    <label class="label">Usuário</label>
+                                    <label class="input">
+                                        <i class="icon-append fa fa-user"></i>
+                                        <input type="text" name="login">
+                                        <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i>  Por favor, informe seu usuário</b>
+                                    </label>
+                                </section>
+
+                                <section>
+                                    <label class="label">Senha</label>
+                                    <label class="input">
+                                        <i class="icon-append fa fa-lock"></i>
+                                        <input type="password" name="password">
+                                        <b class="tooltip tooltip-top-right"><i class="fa fa-lock txt-color-teal"></i> Informe sua senha</b>
+                                    </label>
+                                </section>
+
+                                @*<section>
+                                        <label class="checkbox">
+                                            <input type="checkbox" name="remember" checked="">
+                                            <i></i>Permanecer conectado
+                                        </label>
+                                    </section>*@
+                            </fieldset>
+                            <footer>
+                                <button type="submit" class="btn btn-primary">
+                                    Entrar
+                                </button>
+                            </footer>
+                        </form>
+
+                    </div>
+                    <table>
+                        <tr>
+                            <td>
+                                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                                    <input type="hidden" name="cmd" value="_s-xclick">
+                                    <input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----
+">
+                                    <input type="image" src="https://www.paypalobjects.com/pt_BR/BR/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - A maneira fácil e segura de enviar pagamentos online!">
+                                    <img alt="" border="0" src="https://www.paypalobjects.com/pt_BR/i/scr/pixel.gif" width="1" height="1">
+                                </form>
+                            </td>
+                            <td>
+                                <form action="https://pagseguro.uol.com.br/checkout/v2/donation.html" method="post">
+                                    <!-- NÃO EDITE OS COMANDOS DAS LINHAS ABAIXO -->
+                                    <input type="hidden" name="currency" value="BRL" />
+                                    <input type="hidden" name="receiverEmail" value="tiagowebersc@gmail.com" />
+                                    <input type="image" src="https://p.simg.uol.com.br/out/pagseguro/i/botoes/doacoes/120x53-doar-laranja.gif" name="submit" alt="Pague com PagSeguro - é rápido, grátis e seguro!" />
+                                </form>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                Ajude o projeto a evoluir constantemente, faça uma doação e deixe o programador mais feliz
+                            </td>
+                        </tr>
+                    </table>
+
+                    @*<h5 class="text-center"> - Or sign in using -</h5>
+
+                        <ul class="list-inline text-center">
+                            <li>
+                                <a href="javascript:void(0);" class="btn btn-primary btn-circle"><i class="fa fa-facebook"></i></a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" class="btn btn-info btn-circle"><i class="fa fa-twitter"></i></a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" class="btn btn-warning btn-circle"><i class="fa fa-linkedin"></i></a>
+                            </li>
+                        </ul>*@
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!--================================================== -->
+    <!-- PACE LOADER - turn this on if you want ajax loading to show (caution: uses lots of memory on iDevices)-->
+    @Scripts.Render("~/bundles/pace")
+    <!--<script src="js/plugin/pace/pace.min.js"></script>-->
+    <!-- Link to Google CDN's jQuery + jQueryUI; fall back to local -->
+    <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+    <script> if (!window.jQuery) { document.write('<script src="js/libs/jquery-2.0.2.min.js"><\/script>'); } </script>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+    <script> if (!window.jQuery.ui) { document.write('<script src="js/libs/jquery-ui-1.10.3.min.js"><\/script>'); } </script>-->
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+
+    <!-- JS TOUCH : include this plugin for mobile drag / drop touch events
+    <script src="js/plugin/jquery-touch/jquery.ui.touch-punch.min.js"></script> -->
+    <!-- BOOTSTRAP JS -->
+    @Scripts.Render("~/bundles/bootstrap")
+    <!--<script src="js/bootstrap/bootstrap.min.js"></script>-->
+    <!-- JQUERY VALIDATE -->
+    @Scripts.Render("~/bundles/jqueryval")
+    <!--<script src="js/plugin/jquery-validate/jquery.validate.min.js"></script>-->
+    <!-- JQUERY MASKED INPUT -->
+    @Scripts.Render("~/bundles/jquerymask")
+    <!--<script src="js/plugin/masked-input/jquery.maskedinput.min.js"></script>-->
+    <!--[if IE 8]>
+
+        <h1>Your browser is out of date, please update your browser by going to www.microsoft.com/download</h1>
+
+    <![endif]-->
+    <!-- MAIN APP JS FILE -->
+    @Scripts.Render("~/bundles/app")
+    @Scripts.Render("~/bundles/custom")
+
+    <script type="text/javascript">
+        runAllForms();
+
+        $(function () {
+            // Validation
+            $("#login-form").validate({
+                // Rules for form validation
+                rules: {
+                    email: {
+                        required: true,
+                        email: true
+                    },
+                    password: {
+                        required: true,
+                        minlength: 3,
+                        maxlength: 20
+                    }
+                },
+
+                // Messages for form validation
+                messages: {
+                    email: {
+                        required: 'Please enter your email address',
+                        email: 'Please enter a VALID email address'
+                    },
+                    password: {
+                        required: 'Please enter your password'
+                    }
+                },
+
+                // Do not change code below
+                errorPlacement: function (error, element) {
+                    error.insertAfter(element.parent());
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
